@@ -16,7 +16,6 @@ var size;
 function changeData() {
     db.collection("works").get().then((snapshot) => {
         size=snapshot.size;
-        console.log(parseInt(document.getElementById('worknumber').value, 10));
         counter=1;
         snapshot.forEach((doc) => {
             if (counter === parseInt(document.getElementById('worknumber').value, 10)) {
@@ -36,17 +35,14 @@ function changeData() {
             document.getElementById('next').style.display='none';
         else document.getElementById('next').style.display='block';    
     });
-    
 }
 document.getElementById('next').onclick = () => {
     document.getElementById('worknumber').value=parseInt(document.getElementById('worknumber').value, 10)+1;
     changeData();
-    //window.location='/works/' + x;
 }
 document.getElementById('prev').onclick = () => {
     document.getElementById('worknumber').value=parseInt(document.getElementById('worknumber').value, 10)-1;
     changeData();
-    //window.location='/works/' + x;
 }
 document.getElementById('link').onclick = () => {
     window.location=link;
