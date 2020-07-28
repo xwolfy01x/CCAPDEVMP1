@@ -1,0 +1,52 @@
+.right-col {
+    background-image: url(../images/rightBg.png);
+    background-size: 100% 100%;
+    background-clip: inherit;
+    background-repeat: no-repeat;
+}
+.right-col-start {
+    position: relative;
+    top: 5%;
+    margin-left: 22%;
+    margin-right: 28%;
+    height: 65%;
+    font-size: 35px;
+    font-family: Helvetica;
+    font-weight: 600;
+    color: #32526E;
+}
+#data, #link {
+    font-family: helvetica;
+    font-size: 45%;
+    display: block;
+    margin-left: 6%; 
+    margin-right: 10%; 
+    text-align: justify;
+}
+#link {
+    cursor: pointer;
+    color: #FFCA08;
+    text-decoration: underline;
+}
+.links {
+    margin-left: 5%;
+    font-size: 15px;
+    display: grid;
+    grid-template-columns: 50px 500px;
+}
+.txt-type {
+    font-size: 120%;
+}
+.arrows {
+    display: flex;
+    justify-content: space-evenly;
+    position: absolute;
+    bottom: 5%;
+    width: 100%;
+    font-size: 50%;
+}
+.arrows a {
+    font-weight: 700;
+    color: black;
+    cursor: pointer;
+}

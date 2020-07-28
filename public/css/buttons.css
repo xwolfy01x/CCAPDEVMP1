@@ -1,0 +1,11 @@
+#hbutton, #ebutton, #abutton, #hbutton2, #obutton, #wbutton {
+    border-radius: 50%;
+    opacity: 1;
+    border: 5px solid #32526E;
+    margin: 5px 20px;
+}
+#hbutton:hover, #ebutton:hover, #abutton:hover, #hbutton2:hover, #obutton:hover, #wbutton:hover {
+    opacity: 1.5;
+    cursor: pointer;
+    border: 5px solid #FFCA08;
+}
