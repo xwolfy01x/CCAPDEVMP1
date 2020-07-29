@@ -20,8 +20,8 @@ function changeData() {
             if (counter === parseInt(document.getElementById('number').value, 10)) {
                 document.getElementById('name').innerHTML = doc.data().name;
                 document.getElementById('imglink').innerHTML = `<img src=${doc.data().imglink}>`;
-                document.getElementById('year').innerHTML = `Year Joined:${doc.data().year_start}`;
-                document.getElementById('position').innerHTML = `Position:${doc.data().position}`;
+                document.getElementById('year').innerHTML = `Year Joined: ${doc.data().year_start}`;
+                document.getElementById('position').innerHTML = `Position: ${doc.data().position}`;
                 link=doc.data().link;
             }
             counter++;
