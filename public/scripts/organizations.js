@@ -19,7 +19,7 @@ function changeData() {
         snapshot.forEach(doc => {
             if (counter === parseInt(document.getElementById('number').value, 10)) {
                 document.getElementById('name').innerHTML = doc.data().name;
-                document.getElementById('imglink').innerHTML = `<img src=${doc.data().imglink}>`;
+                document.getElementById('imglink').innerHTML = `<img src=${doc.data().imglink} style="border-radius: 50%;">`;
                 document.getElementById('year').innerHTML = `Year Joined: ${doc.data().year_start}`;
                 document.getElementById('position').innerHTML = `Position: ${doc.data().position}`;
                 link=doc.data().link;

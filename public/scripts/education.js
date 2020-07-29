@@ -18,7 +18,7 @@ function changeData() {
             if (counter === parseInt(document.getElementById('number').value, 10)) {
                 document.getElementById('school').innerHTML = `School: ${doc.data().school}`;
                 document.getElementById('level').innerHTML = `${doc.data().level}`;
-                document.getElementById('imglink').innerHTML = `<img src=${doc.data().imglink}>`;
+                document.getElementById('imglink').innerHTML = `<img src=${doc.data().imglink} style="border-radius: 50%;">`;
                 document.getElementById('year').innerHTML = `Year: ${doc.data().year_start}-`;
                 if (doc.data().year_end != null)
                     document.getElementById('year').innerHTML += `${doc.data().year_end}`;

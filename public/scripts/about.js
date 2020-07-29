@@ -15,9 +15,9 @@ db.collection("others").get().then((snapshot) => {
         document.getElementById('data').innerHTML+=`${doc.data().description}<br><br><br>`;
     });
 });
-db.collection("links").get().then((snapshot) => {
+db.collection("links").orderBy('order', 'asc').get().then((snapshot) => {
     snapshot.forEach((doc) => {
-        document.getElementsByClassName('links')[0].innerHTML+=`<img src="${doc.data().imglink}" id="aboutimg" height="30" width="50" style="margin-bottom: 20px;">`;
-        document.getElementsByClassName('links')[0].innerHTML+=`<a id="aboutlink" href=${doc.data().link}>${doc.data().link}</a>`;
+        document.getElementsByClassName('links')[0].innerHTML+=`<img src="${doc.data().imglink}" id="aboutimg" height="30" width="50" style="border-radius: 50%;"></div>`;
+        document.getElementsByClassName('links')[0].innerHTML+=`<div class="center"><a id="aboutlink" href=${doc.data().link}>${doc.data().link}</a></div>`;
     });
 });
