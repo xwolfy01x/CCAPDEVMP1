@@ -28,7 +28,8 @@ h4 {
 }
 #link {
     cursor: pointer;
-    color: #FFCA08;
+    color: #ceb180;
+    font-weight: 1000;
     text-decoration: underline;
 }
 .center {
