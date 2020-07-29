@@ -31,21 +31,3 @@ a{
     border: 13px solid #32526E;
     margin-top: 42px;
 }
-@media screen and (max-width: 1400px) {
-    #profpic {
-        height: 350px;
-        width: 350px;
-    }
-}
-@media screen and (max-width: 1200px){
-    #profpic {
-        height: 300px;
-        width: 300px;
-    }
-}
-@media screen and (max-width: 800px){
-    #profpic {
-        height: 225px;
-        width: 300px;
-    }
-}
