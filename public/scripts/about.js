@@ -17,7 +17,7 @@ db.collection("others").get().then((snapshot) => {
 });
 db.collection("links").get().then((snapshot) => {
     snapshot.forEach((doc) => {
-        document.getElementsByClassName('links')[0].innerHTML+=`<img src="${doc.data().imglink}" height="30" width="50" style="margin-bottom: 20px;">`;
-        document.getElementsByClassName('links')[0].innerHTML+=`<a style="display: flex; margin-bottom: 20px; align-items: center; font-size: 100%;" href=${doc.data().link}>${doc.data().link}</a>`;
+        document.getElementsByClassName('links')[0].innerHTML+=`<img src="${doc.data().imglink}" id="aboutimg" height="30" width="50" style="margin-bottom: 20px;">`;
+        document.getElementsByClassName('links')[0].innerHTML+=`<a id="aboutlink" href=${doc.data().link}>${doc.data().link}</a>`;
     });
 });

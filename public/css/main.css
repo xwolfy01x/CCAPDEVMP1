@@ -16,8 +16,8 @@ a{
 #container {
     height: 100%;
     display: grid;
-    grid-template-columns: 1fr 2fr;
-    grid-row: 1fr;
+    grid-template-columns: 0.5fr 2fr;
+
     position: relative; 
 }
 .profimg {
@@ -30,5 +30,22 @@ a{
     width: 400px;
     border: 13px solid #32526E;
     margin-top: 42px;
-    margin-left: 100px;
+}
+@media screen and (max-width: 1400px) {
+    #profpic {
+        height: 350px;
+        width: 350px;
+    }
+}
+@media screen and (max-width: 1200px){
+    #profpic {
+        height: 300px;
+        width: 300px;
+    }
+}
+@media screen and (max-width: 800px){
+    #profpic {
+        height: 225px;
+        width: 300px;
+    }
 }
