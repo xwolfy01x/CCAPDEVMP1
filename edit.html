@@ -1,0 +1,33 @@
+<html>
+    <head>
+        <meta charset="UTF-8"></meta>
+        <meta name="viewport", content="width=device-width, initial-scale=1.0"></meta>
+        <title> Website Resume - Jeremy Chi</title>
+        <link rel="stylesheet" type="text/css" href="public/css/main.css">
+        <link rel="stylesheet" type="text/css" href="public/css/buttons.css">
+        <link rel="stylesheet" type="text/css" href="public/css/left-col.css">
+        <link rel="stylesheet" type="text/css" href="public/css/right-col.css">
+        <link rel="stylesheet" type="text/css" href="public/css/form.css">
+        <script src="https://www.gstatic.com/firebasejs/7.17.1/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.17.1/firebase-analytics.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.17.1/firebase-firestore.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.17.1/firebase-auth.js"></script>
+    </head>
+    <body>
+        <img src="public/images/Background.jpg", id="background">
+        <div id="econtainer">
+            <center>
+                <form method="POST">
+                    <label for="email">Email</label><br><input type="text" name="email" id="email" size="40"><br>
+                    <br>
+                    <label for="password">Password</label><br><input type="password" name="password" id="password" size="40"><br><br>
+                    <input type="button" value="Log In" onclick="login();" id="button">
+                </form>
+            </center>
+        </div>
+        <script src="public/scripts/functions.js"></script>
+        <script src="public/scripts/login.js"></script>
+    </body>
+</html>
+        
+        

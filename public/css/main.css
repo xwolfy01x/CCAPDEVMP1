@@ -13,11 +13,10 @@ a{
     transition-duration: 2s;
     transition-timing-function: ease;
 }
-#container {
+#container, #econtainer {
     height: 100%;
     display: grid;
     grid-template-columns: 0.5fr 2fr;
-
     position: relative; 
 }
 .profimg {

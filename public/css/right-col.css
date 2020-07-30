@@ -18,6 +18,11 @@
 h4 {
     margin-left: 6%;
 }
+#aboutimg {
+    height: 50;
+    width: 50;
+    border-radius: 50%;
+}
 #data, #link {
     font-family: helvetica;
     font-size: 45%;
@@ -91,4 +96,10 @@ h6 {
 }
 a, a:visited {
     color: rgb(50, 82, 110);
+}
+@media (max-width: 1300px) {
+    #aboutlink {
+        display: flex;
+        font-size: 70%;
+    }
 }
