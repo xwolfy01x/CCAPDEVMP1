@@ -1,13 +1,39 @@
-.buttons {
-    display: grid;
-    grid-template-rows: 100px 100px;
-    margin-top: 10px;
+#name {
+    color: white;
+    border: 2px solid #06c258;
+    font-family: Helvetica;
+    padding: 10% 15%;
+    font-size: 1.5em;
+    margin: 30% 10%;;
+    text-align: center;
 }
-.top-three {
-    margin-bottom: 10px;
+.links {
+    color: white;
+    font-family: Helvetica;
+    margin: 30% 10%;;
+    font-size: 1.1em;
 }
-.top-three, .bottom-three {
-    display: flex;
-    justify-content: flex-end;
-    margin-right: 20px;
+#intro, #education, #works, #orgs {
+    display: block;
+    border-bottom: 3px solid #444444;
+    padding-top: 5%;
+    padding-bottom: 3%;
+    padding-left: 5%;
+}
+#intro:hover, #education:hover, #works:hover, #orgs:hover {
+    background-color: #555555;
+    border-bottom: 3px solid #06c258;
+}
+a {
+    text-decoration: none;
+    color: inherit;
+}
+a:visited {
+    color: inherit;
+}
+#fname {
+    font-weight: 200;
+}
+#lname {
+    font-weight: 700;
 }

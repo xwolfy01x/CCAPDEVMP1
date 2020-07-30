@@ -1,42 +1,67 @@
 <html>
     <head>
-        <meta charset="UTF-8"></meta>
-        <meta name="viewport", content="width=device-width, initial-scale=1.0"></meta>
-        <title> Website Resume - Jeremy Chi</title>
-        <link rel="stylesheet" type="text/css" href="public/css/main.css">
-        <link rel="stylesheet" type="text/css" href="public/css/buttons.css">
+        <title> Jeremy Chi - Website Resume</title>
         <link rel="stylesheet" type="text/css" href="public/css/left-col.css">
+        <link rel="stylesheet" type="text/css" href="public/css/main.css">
         <link rel="stylesheet" type="text/css" href="public/css/right-col.css">
+        <script src="https://www.gstatic.com/firebasejs/7.17.1/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.17.1/firebase-analytics.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.17.1/firebase-firestore.js"></script>
     </head>
-    <body>
-        <img src="public/images/Background.jpg", id="background">
-        <div id="container">
-            <div>
-                <div class="profimg">
-                    <img src="public/images/mainprofilepic.jpg" id="profpic" onmouseout="bgHover();" onmouseover="bgUnhover();">
+    <body> 
+        <div class="container">
+            <div class="left-col">
+                <div id="name">
+                    <span id="fname">JEREMY</span> 
+                    <span id="lname">CHI</span>
                 </div>
-                <div class="buttons">
-                    <div class="top-three">
-                        <a href="index.html"> <img src="public/images/homebutton.png" alt="Home" id="hbutton" onmouseout="bgHover();" onmouseover="bgUnhover();" style="border-color: #FFCA08;"></a>
-                        <a href="about.html"> <img src="public/images/aboutbutton.png" alt="About" id="abutton" onmouseout="bgHover();" onmouseover="bgUnhover();"></a>
-                        <a href="hobbies.html"><img src="public/images/hobbiesicon.png" alt="Hobbies"  id="hbutton2" onmouseout="bgHover();" onmouseover="bgUnhover();"></a>
+                <nav class="links">
+                    <a id="intro" href="index.html" style="background-color: #E1E7E4; color: black; border-bottom: 3px solid green;">> INTRO</a><br>
+                    <a id="education" href="education.html">> EDUCATION</a><br>
+                    <a id="works" href="works.html">> WORKS</a><br>
+                    <a id="orgs" href="organizations.html">> ORGANIZATIONS</a><br>
+                </nav>
+            </div>
+            <div class="right-col">
+                <div class="content">
+                    <div id="userimg">
+                        <img src="public/images/mainprofilepic.jpg" id="profileimg">
                     </div>
-                    <div class="bottom-three">
-                        <a href="education.html"><img src="public/images/educationbutton.png" alt="Education" id="ebutton" onmouseout="bgHover();" onmouseover="bgUnhover();"></a>
-                        <a href="works.html"><img src="public/images/workbutton.png" alt="Works" id="obutton" onmouseout="bgHover();" onmouseover="bgUnhover();"></a>
-                        <a href="organizations.html"><img src="public/images/organizationicon.png" alt="Organizations" id="wbutton" onmouseout="bgHover();" onmouseover="bgUnhover();"></a>
+                    <div id="introduction">
+                        <div id="hintro">Hi I'm <span id="name2">Jeremy Chi!</span></div>
+                        <div id="degree">Bachelor of Science in Information Technology</div>
+                    </div>
+                    <div id="description">
+                    </div>
+                    <br><br><br><br>
+                    <div id="details">
+                        <div id="details1">
+                            <span class="label">FULL NAME</span>
+                            <span class="answer">Jeremy Chi</span>
+                        </div>
+                        <div id="details1">
+                            <span class="label">BORN</span>
+                            <span class="answer">August 02, 2000</span>
+                        </div>
+                        <div id="details2">
+                            <span class="label">AGE</span>
+                            <span class="answer">20 Years Old</span>
+                        </div>
+                        <div id="details3">
+                            <span class="label">HOBBIES</span>
+                            <div class="answers">
+                                <span id="hobbies"></span>
+                            </div>
+                        </div>
+                        <div id="details4" style="grid-column: 2/4">
+                            <span class="label">CONTACT INFORMATION</span>
+                            <div id="links">
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="right-col">
-                <div class="right-col-start" style="display: flex; justify-content: center; align-items: center; font-size: 150%; width: 100%;" onmouseout="bgHover();" onmouseover="bgUnhover();">
-                    <span class="txt-type" data-wait="3000" data-words='["Welcome To My Website!", "My Name is Jeremy Chi!"]'></span>
-                </div>
-            </div>    
         </div>
-        <script src="public/scripts/functions.js"></script>
-        <script src="public/scripts/typewriter.js"></script>
+        <script src="public/scripts/index.js"></script>
     </body>
 </html>
-        
-        

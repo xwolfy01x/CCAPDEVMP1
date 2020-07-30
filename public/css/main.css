@@ -1,33 +1,34 @@
 body {
     margin: 0;
+    background-image: url(../images/snowbackground.jpg);
 }
-a{
-    text-decoration: none;
-}
-#background {
-    height: 100%;
-    width: 100%;
-    background-repeat: no-repeat;
+#bgimage {
     position: absolute;
-    transition-property: all;
-    transition-duration: 2s;
-    transition-timing-function: ease;
+    width: 100%;
+    height: 100%;
+    opacity: 0.9;
 }
-#container, #econtainer {
+.container {
+    width: 100%;
     height: 100%;
     display: grid;
-    grid-template-columns: 0.5fr 2fr;
-    position: relative; 
+    grid-template-columns: 350px 1fr;
 }
-.profimg {
-    display: flex;
-    justify-content: flex-end;
-    align-items: flex-end;
-    margin-left: 100px;
+.left-col {
+    background-color: #222222;
+    height: 100%;
+    color: white;
+    position: fixed;
+    left: 0;
+    width: 300px;
+    border-right: 50px solid #555555;
 }
-#profpic {
-    height: 400px;
-    width: 400px;
-    border: 13px solid #32526E;
-    margin-top: 42px;
+.right-col {
+    width: 100%;
+    height: 100%;
+    display: inline-block;
+    position: relative;
+    grid-column: 2/3;
+
+    background-repeat: no-repeat;
 }

@@ -1,99 +1,149 @@
-.right-col, .right-col1, .right-col2, .right-col3, .right-col4, .right-col5, .right-col6 {
-    border: 1rem solid rgb(50, 82, 110);
-    margin: 10%;
-    background-image: url(../images/minback.jpg);
-}
-.right-col-start {
+.content {
+    position: relative;
+    margin: 5% 5% 5% 5%;
+    background-color: white;
     height: 100%;
-    position: relative;
-    font-size: 35px;
-    font-family: Helvetica;
-    font-weight: 600;
-    color: #32526E;
+    border: 5px solid #06C258;
 }
-#aboutlink {
-    display: flex;
-    font-size: 90%;
-}
-h4 {
-    margin-left: 6%;
-}
-#aboutimg {
-    height: 50;
-    width: 50;
+#profileimg {
+    height: 250;
+    width: 250;
     border-radius: 50%;
+    border: 5px solid #06C258;
+    margin: 5%;
+    float: left;
 }
-#data, #link {
-    font-family: helvetica;
-    font-size: 45%;
-    display: block;
-    margin-left: 6%; 
-    margin-right: 10%; 
+#introduction {
+    display: inline-block;
+    margin-top: 5%;
+    width: 60%;
+}
+#hintro {
+    color: #444444;
+    font-size: 3em;
+    font-family: verdana;
+    border-bottom: 3px solid gray;
+    font-weight: 500;
+}
+#name2 {
+    color: #06c258;
+    font-weight: 800;
+}
+#description {
+    display: inline-block;
+    width: 60%;
     text-align: justify;
-}
-#link {
-    cursor: pointer;
-    color: #ceb180;
-    font-weight: 1000;
-    text-decoration: underline;
-}
-.center {
-    display: flex;
-    align-items: center;
-}
-.links {
-    margin-left: 5%;
-    font-size: 15px;
-    display: grid;
-    grid-template-columns: 60px 1fr 60px 1fr;
-    grid-row-gap: 10px;
-}
-.txt-type {
     font-size: 120%;
+    margin-top: 3%;
 }
-.arrows {
-    position: relative;
+#degree {
+    margin-top: 2%;
+    font-size: 120%;
+    font-family: verdana;
+    color: #444444;
+    font-weight: 600;
+}
+.label {
+    font-family: verdana;
+    display: inline-block;
+    font-size: 120%;
+    font-weight: 600;
+    width: 100%;
+    border-bottom: 3px solid gray;
+    color: #06c258;
+}
+.answer {
+    font-family: verdana;
+    display: inline-block;
+    font-size: 120%;
+    display: block;
+    margin-bottom: 10%;
+    margin-top: 3%;
+}
+#hobbies {
+    font-family: verdana;
+    display: inline-block;
+    font-size: 120%;
+    display: block;
+    margin-bottom: 10%;
+    margin-top: 3%;
+}
+#details {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-column-gap: 5%;
+    grid-row-gap: 5%;
+    margin-left: 5%;
+    margin-right: 5%;
+}
+#contactimg {
+    height: 40;
+    width: 70;
+}
+#links {
+    display: grid;
+    grid-template-columns: 90px 300px;
+    grid-row-gap: 5%;
+    align-items: center;
+    margin-top: 1%;
+    font-family: verdana;
+    font-size: 100%;
+}
+#educdetails, #orgdetails, #workdetails {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-column-gap: 5%;
+    grid-row-gap: 5%;
+    margin-left: 5%;
+    margin-right: 5%;
+}
+#workdetails .answer{
+    margin-bottom: 5%;
+}
+#workdetails {
+    grid-row-gap: 0%;
+}
+#educimg {
+    height: 100;
+    width: 100;
+}
+.educarrows, .orgarrows, .workarrows {
     display: flex;
     justify-content: space-evenly;
-    width: 100%;
-    font-size: 100%;
-    bottom: 10%;
 }
-#clip {
-    display: flex;
-    justify-content: center;
-    width: 0%;
-}
-.arrows a {
+#orgname, #educlevel, #workname {
     font-weight: 700;
-    color: black;
+    font-size: 180%;
+}
+#worklink {
     cursor: pointer;
+}
+#worklink:hover, #links:hover {
+    color: #444444;
+}
+button {
+    padding: 2% 3%;
+    background-color: #444444;
+    color: white;
+    cursor: pointer;
+    position: relative;
+    bottom: 5%;
     font-family: Helvetica;
     font-weight: 600;
-    color: #32526E;
+    margin-right: 5%;
 }
-#imglink {
-    width: 100%;
-    height: 30%;
-    display: flex;
-    justify-content: center;
-    border-radius: 100%;
+button:hover {
+    background-color: #555555;
 }
-
-#year, #position, #school {
-    display: block;
-}
-h6 {
-    margin-left: 6%;
-    margin-top: 2%;
-    margin-bottom: 2%;
-    font-size: 80%;
-}
-@media (max-width: 1024px) {
-    .links {
-        grid-template-columns: 60px 1fr;
+@media(max-width: 1300px) { 
+    #hintro {
+        font-size: 2.5em;
     }
-}
-a, a:visited {
-    color: rgb(50, 82, 110);
+    #profileimg {
+        height: 200;
+        width: 200;
+    }
+    #description {
+        font-size: 110%;
+    }
 }

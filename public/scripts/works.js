@@ -13,37 +13,42 @@ var db = firebase.firestore();
 var link;
 var counter;
 var size;
-function changeData() {
+db.collection("others").get().then((snapshot) => {
+    snapshot.forEach((doc) => {
+        document.getElementById('description').innerHTML+=`${doc.data().description}<br><br><br>`;
+    });
+});
+function workData() {
     db.collection("works").get().then((snapshot) => {
         size=snapshot.size;
         counter=1;
         snapshot.forEach((doc) => {
-            if (counter === parseInt(document.getElementById('worknumber').value, 10)) {
-                document.getElementById('name').innerHTML = doc.data().name;
-                document.getElementById('data').innerHTML = `${doc.data().description}<br><br><br>`;
-                document.getElementById('year').innerHTML = `${doc.data().year_created}<br><br>`;
-                document.getElementById('link').innerHTML = `${doc.data().link}`;
+            if (counter === parseInt(document.getElementById('number').value, 10)) {
+                document.getElementById('workname').innerHTML = doc.data().name.toUpperCase();
+                document.getElementById('workdescription').innerHTML = `${doc.data().description}`;
+                document.getElementById('workyear').innerHTML = `${doc.data().year_created}`;
+                document.getElementById('worklink').innerHTML = `${doc.data().link}`;
                 link=doc.data().link;
             }
             counter++;
         });
-        if (parseInt(document.getElementById('worknumber').value,10)==1)
-            document.getElementById('prev').style.display='none';
-        else document.getElementById('prev').style.display='block';    
+        if (parseInt(document.getElementById('number').value,10)==1)
+            document.getElementById('workprev').style.display='none';
+        else document.getElementById('workprev').style.display='block';    
         ;
-        if (parseInt(document.getElementById('worknumber').value,10)==size)
-            document.getElementById('next').style.display='none';
-        else document.getElementById('next').style.display='block';    
+        if (parseInt(document.getElementById('number').value,10)==size)
+            document.getElementById('worknext').style.display='none';
+        else document.getElementById('worknext').style.display='block';    
     });
 }
-document.getElementById('next').onclick = () => {
-    document.getElementById('worknumber').value=parseInt(document.getElementById('worknumber').value, 10)+1;
-    changeData();
+document.getElementById('worknext').onclick = () => {
+    document.getElementById('number').value=parseInt(document.getElementById('number').value, 10)+1;
+    workData();
 }
-document.getElementById('prev').onclick = () => {
-    document.getElementById('worknumber').value=parseInt(document.getElementById('worknumber').value, 10)-1;
-    changeData();
+document.getElementById('workprev').onclick = () => {
+    document.getElementById('number').value=parseInt(document.getElementById('number').value, 10)-1;
+    workData();
 }
-document.getElementById('link').onclick = () => {
+document.getElementById('worklink').onclick = () => {
     window.location=link;
 }

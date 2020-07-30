@@ -12,12 +12,20 @@ var defaultProject = firebase.initializeApp(firebaseConfig);
 var db = firebase.firestore();
 db.collection("others").get().then((snapshot) => {
     snapshot.forEach((doc) => {
-        document.getElementById('data').innerHTML+=`${doc.data().description}<br><br><br>`;
+        document.getElementById('description').innerHTML+=`${doc.data().description}<br><br><br>`;
     });
 });
+db.collection("hobbies").orderBy('name','asc').get().then((snapshot) => {
+    snapshot.forEach((doc) => {
+        document.getElementById('hobbies').innerHTML+=`<li>${doc.data().name}</li><br>`;
+    });
+});
+
 db.collection("links").orderBy('order', 'asc').get().then((snapshot) => {
     snapshot.forEach((doc) => {
-        document.getElementsByClassName('links')[0].innerHTML+=`<img src="${doc.data().imglink}" id="aboutimg"></div>`;
-        document.getElementsByClassName('links')[0].innerHTML+=`<div class="center"><a id="aboutlink" href=${doc.data().link}>${doc.data().link}</a></div>`;
+        document.getElementById('links').innerHTML+=`<img src="${doc.data().imglink}" id="contactimg"></div>`;
+        if (doc.data().name==='call' || doc.data().name==='email')
+            document.getElementById('links').innerHTML+=`<span id="contactlink">${doc.data().link}</span>`;
+        else document.getElementById('links').innerHTML+=`<a id="contactlink" href=${doc.data().link}>${doc.data().link}</a>`;
     });
 });

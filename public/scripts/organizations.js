@@ -12,33 +12,38 @@ var defaultProject = firebase.initializeApp(firebaseConfig);
 var db = firebase.firestore();
 var counter;
 var size;
-function changeData() {
-    db.collection("organizations").orderBy("name", "asc").get().then(snapshot => {
+db.collection("others").get().then((snapshot) => {
+    snapshot.forEach((doc) => {
+        document.getElementById('description').innerHTML+=`${doc.data().description}<br><br><br>`;
+    });
+});
+function orgData() {
+    db.collection("organizations").orderBy("year_start", "asc").get().then(snapshot => {
         counter=1;
         size=snapshot.size;
         snapshot.forEach(doc => {
             if (counter === parseInt(document.getElementById('number').value, 10)) {
-                document.getElementById('name').innerHTML = doc.data().name;
-                document.getElementById('imglink').innerHTML = `<img src=${doc.data().imglink} style="border-radius: 50%;">`;
-                document.getElementById('year').innerHTML = `Year Joined: ${doc.data().year_start}`;
-                document.getElementById('position').innerHTML = `Position: ${doc.data().position}`;
+                document.getElementById('orgname').innerHTML = doc.data().name.toUpperCase();
+                document.getElementById('orgimglink').innerHTML = `<img src=${doc.data().imglink} style="border-radius: 50%;">`;
+                document.getElementById('orgyear').innerHTML = `${doc.data().year_start}`;
+                document.getElementById('orgposition').innerHTML = `${doc.data().position}`;
                 link=doc.data().link;
             }
             counter++;
         });
         if (parseInt(document.getElementById('number').value,10)==1)
-            document.getElementById('prev').style.display='none';
-        else document.getElementById('prev').style.display='block';    
+            document.getElementById('orgprev').style.display='none';
+        else document.getElementById('orgprev').style.display='block';    
         if (parseInt(document.getElementById('number').value,10)==size)
-            document.getElementById('next').style.display='none';
-        else document.getElementById('next').style.display='block';    
+            document.getElementById('orgnext').style.display='none';
+        else document.getElementById('orgnext').style.display='block';    
     });
 }
-document.getElementById('next').onclick = () => {
+document.getElementById('orgnext').onclick = () => {
     document.getElementById('number').value=parseInt(document.getElementById('number').value, 10)+1;
-    changeData();
+    orgData();
 }
-document.getElementById('prev').onclick = () => {
+document.getElementById('orgprev').onclick = () => {
     document.getElementById('number').value=parseInt(document.getElementById('number').value, 10)-1;
-    changeData();
+    orgData();
 }

@@ -10,39 +10,51 @@ var firebaseConfig = {
 };
 var defaultProject = firebase.initializeApp(firebaseConfig);
 var db = firebase.firestore();
-function changeData() {
+db.collection("others").get().then((snapshot) => {
+    snapshot.forEach((doc) => {
+        document.getElementById('description').innerHTML+=`${doc.data().description}<br><br><br>`;
+    });
+});
+function educData() {
     db.collection("educations").orderBy("year_start","asc").get().then((snapshot) => {
         size=snapshot.size;
         counter=1;
         snapshot.forEach((doc) => {
             if (counter === parseInt(document.getElementById('number').value, 10)) {
-                document.getElementById('school').innerHTML = `School: ${doc.data().school}`;
-                document.getElementById('level').innerHTML = `${doc.data().level}`;
-                document.getElementById('imglink').innerHTML = `<img src=${doc.data().imglink} style="border-radius: 50%;">`;
-                document.getElementById('year').innerHTML = `Year: ${doc.data().year_start}-`;
+                document.getElementById('educschool').innerHTML = `${doc.data().school}`;
+                document.getElementById('educlevel').innerHTML = `${doc.data().level.toUpperCase()}`;
+                document.getElementById('educimglink').innerHTML = `<img src=${doc.data().imglink} style="border-radius: 50%;">`;
+                document.getElementById('educyear').innerHTML = `${doc.data().year_start}-`;
                 if (doc.data().year_end != null)
-                    document.getElementById('year').innerHTML += `${doc.data().year_end}`;
-                else document.getElementById('year').innerHTML += `present`;
-                if(doc.data().degree!=null)
-                    document.getElementById('degree').innerHTML = `Degree: ${doc.data().degree}`;  
-                else document.getElementById('degree').innerHTML = ``;  
+                    document.getElementById('educyear').innerHTML += `${doc.data().year_end}`;
+                else document.getElementById('educyear').innerHTML += `present`;
+                if(doc.data().degree!=null) {
+                    document.getElementById('educdegree').innerHTML = `${doc.data().degree}`;
+                    document.getElementById('deg').innerHTML = 'Degree';
+                    document.getElementById('deg').style.borderBottom = '3px solid gray';
+                }  
+                else {
+                    document.getElementById('deg').innerHTML = '';
+                    document.getElementById('deg').style.borderBottom = 'none';
+                    document.getElementById('educdegree').innerHTML = ``;  
+                }
             }
             counter++;
         });
         if (parseInt(document.getElementById('number').value,10)==1)
-            document.getElementById('prev').style.display='none';
-        else document.getElementById('prev').style.display='block';    
+            document.getElementById('educprev').style.display='none';
+        else document.getElementById('educprev').style.display='block';    
         ;
         if (parseInt(document.getElementById('number').value,10)==size)
-            document.getElementById('next').style.display='none';
-        else document.getElementById('next').style.display='block';    
+            document.getElementById('educnext').style.display='none';
+        else document.getElementById('educnext').style.display='block';    
     });
 }
-document.getElementById('next').onclick = () => {
+document.getElementById('educnext').onclick = () => {
     document.getElementById('number').value=parseInt(document.getElementById('number').value, 10)+1;
-    changeData();
+    educData();
 }
-document.getElementById('prev').onclick = () => {
+document.getElementById('educprev').onclick = () => {
     document.getElementById('number').value=parseInt(document.getElementById('number').value, 10)-1;
-    changeData();
+    educData();
 }
