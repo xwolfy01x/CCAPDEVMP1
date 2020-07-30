@@ -23,7 +23,7 @@ h4 {
     width: 50;
     border-radius: 50%;
 }
-#data, #link {
+#data, #link, #hobbies, #workdata, #worklink {
     font-family: helvetica;
     font-size: 45%;
     display: block;
@@ -51,7 +51,7 @@ h4 {
 .txt-type {
     font-size: 120%;
 }
-.arrows {
+.arrows, .arrows2, .arrows3 {
     position: relative;
     display: flex;
     justify-content: space-evenly;
@@ -64,7 +64,7 @@ h4 {
     justify-content: center;
     width: 0%;
 }
-.arrows a {
+.arrows a, .arrows2 a, .arrows3 a {
     font-weight: 700;
     color: black;
     cursor: pointer;
@@ -72,7 +72,7 @@ h4 {
     font-weight: 600;
     color: #32526E;
 }
-#imglink {
+#imglink, #orgimglink {
     width: 100%;
     height: 30%;
     display: flex;
@@ -80,7 +80,7 @@ h4 {
     border-radius: 100%;
 }
 
-#year, #position, #school {
+#year, #position, #school, #workyear, #orgyear, #orgposition {
     display: block;
 }
 h6 {
