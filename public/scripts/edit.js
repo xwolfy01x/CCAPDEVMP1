@@ -62,7 +62,7 @@ function getIndex() {
     });
     db.collection("hobbies").orderBy('name','asc').get().then((snapshot) => {
         snapshot.forEach((doc) => {
-            document.getElementById('hobbies').innerHTML+=`<img src="public/images/removehobby.png" height="15" width="15" style="cursor: pointer" onclick="removeHobby('${doc.id}');"> ${doc.id}<br><br>`;
+            document.getElementById('hobbies').innerHTML+=`<img src="public/images/removehobby.png" height="15" width="15" style="cursor: pointer" onclick="removeHobby('${doc.id}');"> ${doc.data().name}<br><br>`;
         });
     });
     db.collection("links").orderBy('order', 'asc').get().then((snapshot) => {
