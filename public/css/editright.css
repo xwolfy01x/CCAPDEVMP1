@@ -1,0 +1,149 @@
+.content {
+    position: relative;
+    margin: 5% 5% 5% 5%;
+    background-color: white;
+    height: 100%;
+    border: 5px solid #06C258;
+}
+#profileimg {
+    height: 250;
+    width: 250;
+    border-radius: 50%;
+    border: 5px solid #06C258;
+    margin: 5%;
+    float: left;
+}
+#introduction {
+    display: inline-block;
+    margin-top: 5%;
+    width: 60%;
+}
+#hintro {
+    color: #444444;
+    font-size: 3em;
+    font-family: verdana;
+    border-bottom: 3px solid gray;
+    font-weight: 500;
+}
+#name2 {
+    color: #06c258;
+    font-weight: 800;
+}
+#description, #educdescription, #orgdescription, #workdescription {
+    display: inline-block;
+    width: 60%;
+    text-align: justify;
+    font-size: 120%;
+    margin-top: 3%;
+}
+#degree {
+    margin-top: 2%;
+    font-size: 120%;
+    font-family: verdana;
+    color: #444444;
+    font-weight: 600;
+}
+.label {
+    font-family: verdana;
+    display: inline-block;
+    font-size: 120%;
+    font-weight: 600;
+    width: 100%;
+    border-bottom: 3px solid gray;
+    color: #06c258;
+}
+.answer {
+    font-family: verdana;
+    display: inline-block;
+    font-size: 120%;
+    display: block;
+    margin-bottom: 10%;
+    margin-top: 3%;
+}
+#hobbies {
+    font-family: verdana;
+    display: inline-block;
+    font-size: 120%;
+    display: block;
+    margin-bottom: 10%;
+    margin-top: 3%;
+}
+#details {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-column-gap: 5%;
+    grid-row-gap: 5%;
+    margin-left: 5%;
+    margin-right: 5%;
+}
+#contactimg {
+    height: 40;
+    width: 70;
+}
+#links {
+    display: grid;
+    grid-template-columns: 90px 1fr 50px;
+    grid-row-gap: 5%;
+    align-items: center;
+    margin-top: 1%;
+    font-family: verdana;
+    font-size: 100%;
+}
+#educdetails, #orgdetails, #workdetails {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-column-gap: 5%;
+    grid-row-gap: 5%;
+    margin-left: 5%;
+    margin-right: 5%;
+}
+#workdetails .answer{
+    margin-bottom: 5%;
+}
+#workdetails {
+    grid-row-gap: 0%;
+}
+#educimg {
+    height: 100;
+    width: 100;
+}
+.educarrows, .orgarrows, .workarrows {
+    display: flex;
+    justify-content: space-evenly;
+}
+#orgname, #educlevel, #workname {
+    font-weight: 700;
+    font-size: 180%;
+}
+#worklink {
+    cursor: pointer;
+}
+#worklink:hover, #links:hover {
+    color: #444444;
+}
+button {
+    padding: 2% 3%;
+    background-color: #444444;
+    color: white;
+    cursor: pointer;
+    position: relative;
+    bottom: 5%;
+    font-family: Helvetica;
+    font-weight: 600;
+    margin-right: 5%;
+}
+button:hover {
+    background-color: #555555;
+}
+@media(max-width: 1300px) { 
+    #hintro {
+        font-size: 2.5em;
+    }
+    #profileimg {
+        height: 200;
+        width: 200;
+    }
+    #description {
+        font-size: 110%;
+    }
+}

@@ -23,12 +23,11 @@ body {
     width: 300px;
     border-right: 50px solid #555555;
 }
-.right-col {
+.right-col, .right-col1, .right-col2 {
     width: 100%;
     height: 100%;
     display: inline-block;
     position: relative;
     grid-column: 2/3;
-
     background-repeat: no-repeat;
 }

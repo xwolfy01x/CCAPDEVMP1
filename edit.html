@@ -1,0 +1,147 @@
+<html>
+    <head>
+        <title>Website Authentication</title>
+        <link rel="stylesheet" type="text/css" href="public/css/forms.css">
+        <link rel="stylesheet" type="text/css" href="public/css/left-col.css">
+        <link rel="stylesheet" type="text/css" href="public/css/main.css">
+        <link rel="stylesheet" type="text/css" href="public/css/editright.css">
+        <script src="https://www.gstatic.com/firebasejs/7.17.1/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.17.1/firebase-analytics.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.17.1/firebase-firestore.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.17.1/firebase-auth.js"></script>
+    </head>
+    <body onload=" hideAll();">
+        <div class="form">
+            <form method="POST">
+                <label for="email">Email</label><br>
+                <input type="text" size="25" id="email"><br>
+                <label for="password">Password</label><br>
+                <input type="password" size="25" id="password"><br>
+                <center>
+                <div id="formbutton" onclick='login();'>Log In</div>
+                </center>
+            </form>
+        </div>
+        <div id="addHobbyForm">
+            <form method="POST">
+                <label for="newHobby">New Hobby</label><br>
+                <input type="text" size="25" id="hobbybox">
+                <div id="formbutton" onclick='hideHobbyForm();' style="display: inline-block;">Cancel</div>
+                <div id="formbutton" onclick='addHobby(); hideHobbyForm();' style="display: inline-block;">Add Hobby</div>
+            </form>
+        </div>
+        <div id="editDescriptionForm">
+            <form method="POST">
+                <label for="editDescription">Edit Description</label><br>
+                <textarea id="descriptionBox" rows="8" cols="50"></textarea><br>
+                <div id="formbutton" onclick='hideDescForm();' style="display: inline-block;">Cancel</div>
+                <div id="formbutton" onclick='editDescription("k4CeTgb3SPxC5UESqt7S"); hideDescForm();' style="display: inline-block;">Update Description</div>
+            </form>
+        </div>
+        <div id="editContactLinks">
+            <form method="POST">
+                <div id="contacticon"></div><br>
+                <input type="text" size="35" id="contactbox"><br><br><br>
+                <input type="text" size="25" id="contactidbox" style="display: none;">
+                <div id="formbutton" onclick='hideContactForm();' style="display: inline-block;">Cancel</div>
+                <div id="formbutton" onclick='editContact();' style="display: inline-block;">Update</div>
+            </form>
+        </div>
+        <div class="container" style="display: none;">
+            <div class="left-col">
+                <div id="name">
+                    <span id="fname">JEREMY</span> 
+                    <span id="lname">CHI</span>
+                </div>
+                <nav class="links"> 
+                    <a id="intro" onclick='showContent(1); getIndex();'>> INTRO</a><br>
+                    <a id="education" onclick='showContent(2); getEducation();'>> EDUCATION</a><br>
+                    <a id="works">> WORKS</a><br>
+                    <a id="orgs">> ORGANIZATIONS</a><br>
+                </nav>
+            </div>
+            <div class="right-col1">
+                <div class="content">
+                    <div id="userimg">
+                        <img src="public/images/mainprofilepic.jpg" id="profileimg">
+                    </div>
+                    <div id="introduction">
+                        <div id="hintro">Hi I'm <span id="name2">Jeremy Chi!</span></div>
+                        <div id="degree">Bachelor of Science in Information Technology</div>
+                    </div>
+                    <div id="description">
+                    </div>
+                    <br><br><br><br>
+                    <div id="details">
+                        <div id="details1">
+                            <span class="label">FULL NAME</span>
+                            <span class="answer">Jeremy Chi</span>
+                        </div>
+                        <div id="details1">
+                            <span class="label">BORN</span>
+                            <span class="answer">August 02, 2000</span>
+                        </div>
+                        <div id="details2">
+                            <span class="label">AGE</span>
+                            <span class="answer">20 Years Old</span>
+                        </div>
+                        <div id="details3">
+                            <div class="label">
+                                <span>HOBBIES</span>
+                                <img src="public/images/addhobby.jpg" height="20" width="20" style="float: right; cursor: pointer" onclick = 'showHobbyForm();'>
+                            </div>
+                            <div class="answers">
+                                <span id="hobbies"></span>
+                            </div>
+                        </div>
+                        <div id="details4" style="grid-column: 2/4">
+                            <span class="label">CONTACT INFORMATION</span>
+                            <div id="links">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="right-col2">
+                <div class="content">
+                    <div id="userimg">
+                        <img src="public/images/mainprofilepic.jpg" id="profileimg">
+                    </div>
+                    <div id="introduction">
+                        <div id="hintro">Hi I'm <span id="name2">Jeremy Chi!</span></div>
+                        <div id="degree">Bachelor of Science in Information Technology</div>
+                    </div>
+                    <div id="educdescription"></div>
+                    <br><br><br><br>
+                    <div id="educdetails">
+                        <span class="label" id="educlevel" style="grid-column: 1/3"></span>
+                        <input type="text" style="display: none;" id="number" value="1">
+                        <div style="display: flex; justify-content: center; align-items: center;">
+                            <span id="educimglink"></span>
+                        </div>
+                        <div>
+                            <div>
+                                <span class="label">SCHOOL</span>
+                                <span class="answer" id="educschool"></span>
+                            </div>
+                            <div>
+                                <span class="label">YEARS</span>
+                                <span class="answer" id="educyear"></span>
+                            </div>
+                            <div>
+                                <span class="label" id="deg" style="border-bottom: none;"></span>
+                                <span class="answer" id="educdegree"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <br><br>
+                    <div class="educarrows">
+                        <button id="educprev">PREV</button>
+                        <button id="educnext">NEXT</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="public/scripts/edit.js"></script>
+    </body>
+</html>

@@ -1,0 +1,54 @@
+form {
+    background-color: white;
+    padding: 5%;
+    padding-left: 3%;
+    padding-right: 4%;
+    position: relative;
+    font-family: Helvetica;
+    text-align: center;
+}
+.form, #addHobbyForm, #editDescriptionForm, #editContactLinks {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#addHobbyForm, #editContactLinks {
+    position: fixed;
+    width: 30%;
+    z-index: 2;
+    top: 50%;
+    left: 35%;
+}
+#editDescriptionForm {
+    position: fixed;
+    width: 50%;
+    z-index: 2;
+    left: 25%;
+}
+label {
+    color: #06c258;
+    font-weight: 600;
+    font-size: 120%;
+    padding-left: 5%;
+}
+#email, #password, #hobbybox, #descriptionBox {
+    margin: 5%;
+    margin-bottom: 10%;
+    font-family: verdana;
+    font-size: 1.1rem;
+}
+#formbutton {
+    font-family: Helvetica;
+    background-color: #06c258;
+    border: none;
+    cursor: pointer;
+    width: 30%;
+    position: relative;
+    padding: 5%;
+    padding-left: 5%;
+    margin-left: 5%;
+}
+#formbutton:hover {
+    background-color: #06c270;
+}
