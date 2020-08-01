@@ -95,6 +95,28 @@
                 <div id="formbutton" onclick="hideAddWork(); addWork();" style="display: inline-block">Add Education</div>
             </form>
         </div>
+        <div id="removeOrgPrompt">
+            <form method="POST">
+                <label for="prompt">Are you sure you want to remove this?</label>
+                <input type="text" style="display: none" id="orgdocid">
+                <div id="formbutton" onclick="hideWarning3();" style="display: inline-block;">No</div>
+                <div id="formbutton" onclick="removeOrg(); hideWarning3();" style="display: inline-block;">Yes</div>
+            </form>
+        </div>
+        <div id="addOrgForm">
+            <form method="POST">
+                <label for="Org Name">Organization Name</label><br>
+                <input type="text" id="orgnamebox" size="25"><br>
+                <label for="Org Logo Link">Organization Logo Link</label><br>
+                <input type="text" id="orgimglinkbox" size="25"><br>
+                <label for="Org Position">Organization Position</label><br>
+                <input type="text" id="orgpositionbox" size="25"><br>
+                <label for="Year Joined">Year Joined</label><br>
+                <input type="text" id="orgyearjoinedbox" size="25"><br>
+                <div id="formbutton" onclick="hideAddOrg();" style="display: inline-block;">Cancel</div>
+                <div id="formbutton" onclick="hideAddOrg(); addOrg();" style="display: inline-block">Add Education</div>
+            </form>
+        </div>
         <div class="container" style="display: none;">
             <div class="left-col">
                 <div id="name">
@@ -105,7 +127,7 @@
                     <a id="intro" onclick='showContent(1); getIndex();'>> INTRO</a><br>
                     <a id="education" onclick='showContent(2); getEducation();'>> EDUCATION</a><br>
                     <a id="works" onclick="showContent(3); getWorks();">> WORKS</a><br>
-                    <a id="orgs">> ORGANIZATIONS</a><br>
+                    <a id="orgs" onclick="showContent(4); getOrgs();">> ORGANIZATIONS</a><br>
                 </nav>
             </div>
             <div class="right-col1">
@@ -222,6 +244,42 @@
                         <button id="remWorkButton">Remove Work</button>
                         <button id="addWorkButton" onclick="showAddWork();">Add Work</button>
                         <button id="worknext">NEXT</button>
+                    </div>
+                </div>
+            </div>
+            <div class="right-col4">
+                <div class="content">
+                    <div id="userimg">
+                        <img src="public/images/mainprofilepic.jpg" id="profileimg">
+                    </div>
+                    <div id="introduction">
+                        <div id="hintro">Hi I'm <span id="name2">Jeremy Chi!</span></div>
+                        <div id="degree">Bachelor of Science in Information Technology</div>
+                    </div>
+                    <div id="orgdescription"></div>
+                    <br><br><br><br>
+                    <div id="orgdetails">
+                        <span class="label" id="orgname" style="grid-column: 1/3"></span>
+                        <div style="display: flex; justify-content: center; align-items: center;">
+                            <span id="orgimglink"></span>
+                        </div>
+                        <div>
+                            <div>
+                                <span class="label">Org Position</span>
+                                <span class="answer" id="orgposition"></span>
+                            </div>
+                            <div>
+                                <span class="label">Year Joined</span>
+                                <span class="answer" id="orgyear"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <br><br>
+                    <div class="orgarrows">
+                        <button id="orgprev">PREV</button>
+                        <button id="remOrgButton">Remove Org</button>
+                        <button id="addOrgButton" onclick="showAddOrg();">Add Org</button>
+                        <button id="orgnext">NEXT</button>
                     </div>
                 </div>
             </div>

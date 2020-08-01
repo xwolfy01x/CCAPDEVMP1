@@ -32,7 +32,7 @@ function login() {
 }
 function hideAll() {
     let buttons = ['intro', 'education', 'works', 'orgs'];
-    for (let x=1; x<=3; x++) {
+    for (let x=1; x<=4; x++) {
         document.getElementsByClassName(`right-col${x}`)[0].style.display ='none';
         document.getElementById(buttons[x-1]).style.borderBottom='3px solid #444444';
         document.getElementById(buttons[x-1]).style.color='white';
@@ -45,6 +45,8 @@ function hideAll() {
     document.getElementById('addEducForm').style.display='none';
     document.getElementById('removeWorkPrompt').style.display='none';
     document.getElementById('addWorkForm').style.display='none';
+    document.getElementById('addOrgForm').style.display='none';
+    document.getElementById('removeOrgPrompt').style.display='none';
 }
 function showContent(x) {
     hideAll();
@@ -338,5 +340,86 @@ function addWork() {
         console.log("Document written with ID: ", docRef.id);
     }).catch(function(error) {
         console.error("Error adding document: ", error);
+    });
+}
+function getOrgs() {
+    document.getElementById('orgdescription').innerHTML = '';
+    db.collection("others").get().then((snapshot) => {
+        snapshot.forEach((doc) => {
+            document.getElementById('orgdescription').innerHTML+=`${doc.data().description}<br><br><br>`;
+        });
+    });
+    db.collection("organizations").orderBy("year_start", "asc").get().then(snapshot => {
+        counter=1;
+        size=snapshot.size;
+        snapshot.forEach(doc => {
+            if (counter === parseInt(document.getElementById('number').value, 10)) {
+                document.getElementById('orgname').innerHTML = doc.data().name.toUpperCase();
+                document.getElementById('orgimglink').innerHTML = `<img src=${doc.data().imglink} style="border-radius: 50%;">`;
+                document.getElementById('orgyear').innerHTML = `${doc.data().year_start}`;
+                document.getElementById('orgposition').innerHTML = `${doc.data().position}`;
+                link=doc.data().link;
+            }
+            counter++;
+            document.getElementById('remOrgButton').setAttribute("onclick", `showWarning3(); document.getElementById('orgdocid').value='${doc.id}'`);
+        });
+        if (parseInt(document.getElementById('number').value,10)==1)
+            document.getElementById('orgprev').style.display='none';
+        else document.getElementById('orgprev').style.display='block';    
+        if (parseInt(document.getElementById('number').value,10)==size)
+            document.getElementById('orgnext').style.display='none';
+        else document.getElementById('orgnext').style.display='block';    
+    });
+}
+document.getElementById('orgnext').onclick = () => {
+    document.getElementById('number').value=parseInt(document.getElementById('number').value, 10)+1;
+    getOrgs();
+}
+document.getElementById('orgprev').onclick = () => {
+    document.getElementById('number').value=parseInt(document.getElementById('number').value, 10)-1;
+    getOrgs();
+}
+function showAddOrg() {
+    document.getElementById('addOrgForm').style.display='block';
+    document.getElementsByClassName('container')[0].style.opacity='0.3';
+}
+function hideAddOrg() {
+    document.getElementById('addOrgForm').style.display='none';
+    document.getElementsByClassName('container')[0].style.opacity='1';
+}
+function addOrg() {
+    db.collection("organizations").add({
+        name: document.getElementById('orgnamebox').value,
+        imglink: document.getElementById('orgimglinkbox').value,
+        position: document.getElementById('orgpositionbox').value,
+        year_start: parseInt(document.getElementById('orgyearjoinedbox').value,10)
+    }).then(function(docRef) {
+        getOrgs();
+        document.getElementById('orgnamebox').value='';
+        document.getElementById('orgpositionbox').value='';
+        document.getElementById('orgyearjoinedbox').value='';
+        document.getElementById('orgimglinkbox').value='';
+        console.log("Document written with ID: ", docRef.id);
+    }).catch(function(error) {
+        console.error("Error adding document: ", error);
+    });
+}
+function showWarning3() {
+    document.getElementById('removeOrgPrompt').style.display = 'block';
+    document.getElementsByClassName('container')[0].style.opacity='0.3';
+}
+function hideWarning3() {
+    document.getElementById('removeOrgPrompt').style.display = 'none';
+    document.getElementsByClassName('container')[0].style.opacity='1';
+}
+function removeOrg() {
+    var x=document.getElementById('orgdocid').value;
+    console.log(x);
+    db.collection("organizations").doc(`${x}`).delete().then(function() {
+        console.log("Document successfully deleted!");
+        document.getElementById('number').value=1;
+        getOrgs();
+    }).catch(function(error) {
+        console.error("Error removing document: ", error);
     });
 }

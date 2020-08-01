@@ -14,14 +14,14 @@ form {
     align-items: center;
     justify-content: center;
 }
-#addHobbyForm, #editContactLinks, #removeEducPrompt, #removeWorkPrompt {
+#addHobbyForm, #editContactLinks, #removeEducPrompt, #removeWorkPrompt, #removeOrgPrompt {
     position: fixed;
     width: 30%;
     z-index: 2;
     top: 40%;
     left: 35%;
 }
-#removeEducPrompt, #removeWorkPrompt {
+#removeEducPrompt, #removeWorkPrompt, #removeOrgPrompt {
     width: 35%;
 }
 #editDescriptionForm {
@@ -31,7 +31,7 @@ form {
     left: 25%;
     top: 20%;
 }
-#addEducForm, #addWorkForm {
+#addEducForm, #addWorkForm, #addOrgForm {
     position: fixed;
     width: 40%;
     z-index: 2;
@@ -50,7 +50,8 @@ label {
     font-size: 1.1rem;
     text-align: justify;
 }
-#educschoolbox, #educschoollogo, #educlevelbox, #educdegreebox, #educyearstartbox, #educyearendbox, #worknamebox, #workyearcreatedbox, #worklinkbox, #workdescbox {
+#educschoolbox, #educschoollogo, #educlevelbox, #educdegreebox, #educyearstartbox, #educyearendbox, #worknamebox, 
+#workyearcreatedbox, #worklinkbox, #workdescbox, #orgnamebox, #orgimglinkbox, #orgpositionbox, #orgyearjoinedbox {
     margin-bottom: 5%;
     font-family: verdana;
     font-size: 1.1rem;
