@@ -57,7 +57,6 @@ function showContent(x) {
     document.getElementById(buttons[x-1]).style.borderBottom = '3px solid green';
     document.getElementsByClassName(`right-col${x}`)[0].style.display ='block';
 }
-
 function getIndex() {
     document.getElementById('description').innerHTML='';
     document.getElementById('hobbies').innerHTML='';
@@ -99,6 +98,7 @@ function editDescription(x) {
         getIndex();
         getEducation();
         getWorks();
+        getOrgs();
         console.log("Description updated!");
     }).catch(error => {
         console.error("Error adding document: ", error);
@@ -346,7 +346,9 @@ function getOrgs() {
     document.getElementById('orgdescription').innerHTML = '';
     db.collection("others").get().then((snapshot) => {
         snapshot.forEach((doc) => {
-            document.getElementById('orgdescription').innerHTML+=`${doc.data().description}<br><br><br>`;
+            document.getElementById('orgdescription').innerHTML+=`${doc.data().description}`;
+            document.getElementById('orgdescription').innerHTML+=`<img src="public/images/editButton.png" height="30" width="30" style="cursor: pointer; float: right; display: inline-block" onclick="showDescForm();"><br><br><br>`
+            document.getElementById('descriptionBox').innerHTML=`${doc.data().description}`;
         });
     });
     db.collection("organizations").orderBy("year_start", "asc").get().then(snapshot => {
