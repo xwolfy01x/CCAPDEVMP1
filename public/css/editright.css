@@ -135,6 +135,12 @@ button {
 button:hover {
     background-color: #555555;
 }
+#remEducButton {
+    background-color: red;
+}
+#addEducButton {
+    background-color: #06C258;
+}
 @media(max-width: 1300px) { 
     #hintro {
         font-size: 2.5em;

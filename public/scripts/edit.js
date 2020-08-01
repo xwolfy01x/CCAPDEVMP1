@@ -14,6 +14,9 @@ var firebaseConfig = {
 };
 var defaultProject = firebase.initializeApp(firebaseConfig);
 var db = firebase.firestore();
+document.getElementsByClassName('form')[0].addEventListener('click', (event) => {
+    event.preventDefault();
+});
 function login() {
     var email = document.getElementById('email').value;
     var password = document.getElementById('password').value;
@@ -38,6 +41,8 @@ function hideAll() {
     document.getElementById('addHobbyForm').style.display='none';
     document.getElementById('editDescriptionForm').style.display='none';
     document.getElementById('editContactLinks').style.display='none';
+    document.getElementById('removeEducPrompt').style.display='none';
+    document.getElementById('addEducForm').style.display='none';
 }
 function showContent(x) {
     hideAll();
@@ -57,7 +62,7 @@ function getIndex() {
         snapshot.forEach((doc) => {
             document.getElementById('description').innerHTML+=`${doc.data().description}`;
             document.getElementById('description').innerHTML+=`<img src="public/images/editButton.png" height="30" width="30" style="cursor: pointer; float: right;" onclick="showDescForm();"><br><br><br>`
-            document.getElementById('descriptionBox').innerHTML+=`${doc.data().description}`;
+            document.getElementById('descriptionBox').innerHTML=`${doc.data().description}`;
         });
     });
     db.collection("hobbies").orderBy('name','asc').get().then((snapshot) => {
@@ -67,7 +72,6 @@ function getIndex() {
     });
     db.collection("links").orderBy('order', 'asc').get().then((snapshot) => {
         snapshot.forEach((doc) => {
-            var object={link: doc.data().link, id: doc.id};
             document.getElementById('links').innerHTML+=`<img src="${doc.data().imglink}" id="contactimg"></div>`;
             if (doc.data().name==='call' || doc.data().name==='email')
                 document.getElementById('links').innerHTML+=`<span id="contactlink">${doc.data().link}</span>`;
@@ -77,10 +81,12 @@ function getIndex() {
     });
 }
 function getEducation() {
+    document.getElementById('educdescription').innerHTML='';
     db.collection("others").get().then((snapshot) => {
         snapshot.forEach((doc) => {
-            document.getElementById('educdescription').innerHTML=`${doc.data().description}<br><br><br>`;
-            document.getElementById('descriptionBox').innerHTML+=`${doc.data().description}`;
+            document.getElementById('educdescription').innerHTML=`${doc.data().description}`;
+            document.getElementById('educdescription').innerHTML+=`<img src="public/images/editButton.png" height="30" width="30" style="cursor: pointer; float: right; display: inline-block" onclick="showDescForm();"><br><br><br>`
+            document.getElementById('descriptionBox').innerHTML=`${doc.data().description}`;
         });
     });
     db.collection("educations").orderBy("year_start","asc").get().then((snapshot) => {
@@ -105,6 +111,7 @@ function getEducation() {
                     document.getElementById('deg').style.borderBottom = 'none';
                     document.getElementById('educdegree').innerHTML = ``;  
                 }
+                document.getElementById('remEducButton').setAttribute("onclick", `showWarning(); document.getElementById('educdocid').value='${doc.id}'`);
             }
             counter++;
         });
@@ -138,6 +145,7 @@ function editDescription(x) {
         description: document.getElementById('descriptionBox').value
     }).then(function(docRef) {
         getIndex();
+        getEducation();
         console.log("Description updated!");
     }).catch(error => {
         console.error("Error adding document: ", error);
@@ -193,4 +201,43 @@ function showContactForm(x) {
 function hideContactForm() {
     document.getElementById('editContactLinks').style.display='none';
     document.getElementsByClassName('container')[0].style.opacity='1';
+}
+function showWarning() {
+    document.getElementById('removeEducPrompt').style.display = 'block';
+    document.getElementsByClassName('container')[0].style.opacity='0.3';
+}
+function hideWarning() {
+    document.getElementById('removeEducPrompt').style.display = 'none';
+    document.getElementsByClassName('container')[0].style.opacity='1';
+}
+function removeEduc() {
+    var x=document.getElementById('educdocid').value;
+    db.collection("educations").doc(`${x}`).delete().then(function() {
+        console.log("Document successfully deleted!");
+        getEducation();
+    }).catch(function(error) {
+        console.error("Error removing document: ", error);
+    });
+}
+function showAddEduc() {
+    document.getElementById('addEducForm').style.display='block';
+    document.getElementsByClassName('container')[0].style.opacity='0.3';
+}
+function hideAddEduc() {
+    document.getElementById('addEducForm').style.display='none';
+    document.getElementsByClassName('container')[0].style.opacity='1';
+}
+function addEduc() {
+    db.collection("educations").add({
+        school: document.getElementById('educschoolbox').value,
+        level: document.getElementById('educlevelbox').value,
+        imglink: document.getElementById('educschoollogo').value,
+        year_start: parseInt(document.getElementById('educyearstartbox').value,10),
+        year_end: parseInt(document.getElementById('educyearendbox').value,10)
+    }).then(function(docRef) {
+        getEducation    ();
+        console.log("Document written with ID: ", docRef.id);
+    }).catch(function(error) {
+        console.error("Error adding document: ", error);
+    });
 }
