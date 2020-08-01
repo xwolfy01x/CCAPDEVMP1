@@ -264,7 +264,7 @@ function getWorks() {
             document.getElementById('descriptionBox').innerHTML=`${doc.data().description}`;
         });
     });
-    db.collection("works").get().then((snapshot) => {
+    db.collection("works").orderBy("year_created", "asc").get().then((snapshot) => {
         size=snapshot.size;
         counter=1;
         snapshot.forEach((doc) => {
@@ -274,9 +274,9 @@ function getWorks() {
                 document.getElementById('workyear').innerHTML = `${doc.data().year_created}`;
                 document.getElementById('worklink').innerHTML = `${doc.data().link}`;
                 link=doc.data().link;
+                document.getElementById('remWorkButton').setAttribute("onclick", `showWarning2(); document.getElementById('workdocid').value='${doc.id}'`);
             }
             counter++;
-            document.getElementById('remWorkButton').setAttribute("onclick", `showWarning2(); document.getElementById('workdocid').value='${doc.id}'`);
         });
         if (parseInt(document.getElementById('number').value,10)==1)
             document.getElementById('workprev').style.display='none';
@@ -331,12 +331,12 @@ function addWork() {
         name: document.getElementById('worknamebox').value,
         year_created: parseInt(document.getElementById('workyearcreatedbox').value,10)
     }).then(function(docRef) {
+        document.getElementById('number').value=1;
         getWorks();
         document.getElementById('workdescbox').value='';
         document.getElementById('worklinkbox').value='';
         document.getElementById('worknamebox').value='';
         document.getElementById('workyearcreatedbox').value='';
-        document.getElementById('number').value=1;
         console.log("Document written with ID: ", docRef.id);
     }).catch(function(error) {
         console.error("Error adding document: ", error);
@@ -361,9 +361,9 @@ function getOrgs() {
                 document.getElementById('orgyear').innerHTML = `${doc.data().year_start}`;
                 document.getElementById('orgposition').innerHTML = `${doc.data().position}`;
                 link=doc.data().link;
+                document.getElementById('remOrgButton').setAttribute("onclick", `showWarning3(); document.getElementById('orgdocid').value='${doc.id}'`);
             }
             counter++;
-            document.getElementById('remOrgButton').setAttribute("onclick", `showWarning3(); document.getElementById('orgdocid').value='${doc.id}'`);
         });
         if (parseInt(document.getElementById('number').value,10)==1)
             document.getElementById('orgprev').style.display='none';
@@ -396,6 +396,7 @@ function addOrg() {
         position: document.getElementById('orgpositionbox').value,
         year_start: parseInt(document.getElementById('orgyearjoinedbox').value,10)
     }).then(function(docRef) {
+        document.getElementById('number').value=1;
         getOrgs();
         document.getElementById('orgnamebox').value='';
         document.getElementById('orgpositionbox').value='';
