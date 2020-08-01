@@ -63,12 +63,36 @@
                 <input type="text" id="educschoollogo" size="25"><br>
                 <label for="level">Educational Level</label><br>
                 <input type="text" id="educlevelbox" size="25"><br>
+                <label for="level">Degree</label><br>
+                <input type="text" id="educdegreebox" size="25"><br>
                 <label for="year_start">Year Started</label><br>
                 <input type="text" id="educyearstartbox" size="25"><br>
                 <label for="year_end">Year Ended</label><br>
                 <input type="text" id="educyearendbox" size="25"><br>
                 <div id="formbutton" onclick="hideAddEduc();" style="display: inline-block;">Cancel</div>
                 <div id="formbutton" onclick="hideAddEduc(); addEduc();" style="display: inline-block">Add Education</div>
+            </form>
+        </div>
+        <div id="removeWorkPrompt">
+            <form method="POST">
+                <label for="prompt">Are you sure you want to remove this?</label>
+                <input type="text" style="display: none" id="workdocid">
+                <div id="formbutton" onclick="hideWarning2();" style="display: inline-block;">No</div>
+                <div id="formbutton" onclick="removeWork(); hideWarning2();" style="display: inline-block;">Yes</div>
+            </form>
+        </div>
+        <div id="addWorkForm">
+            <form method="POST">
+                <label for="Work Name">Work Name</label><br>
+                <input type="text" id="worknamebox" size="25"><br>
+                <label for="year_created">Year Created</label><br>
+                <input type="text" id="workyearcreatedbox" size="25"><br>
+                <label for="Work Link">Link (GDRIVE)</label><br>
+                <input type="text" id="worklinkbox" size="25"><br>
+                <label for="Work Description">Short Description</label><br>
+                <textarea id="workdescbox" rows="5" cols="25"></textarea><br>
+                <div id="formbutton" onclick="hideAddWork();" style="display: inline-block;">Cancel</div>
+                <div id="formbutton" onclick="hideAddWork(); addWork();" style="display: inline-block">Add Education</div>
             </form>
         </div>
         <div class="container" style="display: none;">
@@ -80,7 +104,7 @@
                 <nav class="links"> 
                     <a id="intro" onclick='showContent(1); getIndex();'>> INTRO</a><br>
                     <a id="education" onclick='showContent(2); getEducation();'>> EDUCATION</a><br>
-                    <a id="works">> WORKS</a><br>
+                    <a id="works" onclick="showContent(3); getWorks();">> WORKS</a><br>
                     <a id="orgs">> ORGANIZATIONS</a><br>
                 </nav>
             </div>
@@ -164,6 +188,40 @@
                         <button id="remEducButton">Remove Education</button>
                         <button id="addEducButton" onclick="showAddEduc();">Add Education</button>
                         <button id="educnext">NEXT</button>
+                    </div>
+                </div>
+            </div>
+            <div class="right-col3">
+                <div class="content">
+                    <div id="userimg">
+                        <img src="public/images/mainprofilepic.jpg" id="profileimg">
+                    </div>
+                    <div id="introduction">
+                        <div id="hintro">Hi I'm <span id="name2">Jeremy Chi!</span></div>
+                        <div id="degree">Bachelor of Science in Information Technology</div>
+                    </div>
+                    <div id="workdescription">
+                    </div>
+                    <br><br><br><br>
+                    <div id="workdetails">
+                        <span class="label" id="workname" style="grid-column: 1/3"></span>
+                        <span class="answer" style="grid-column: 1/3;" id="workdescription2"></span>
+                        <div id="workimg" style="grid-column: 1/3"></div>
+                        <div>
+                            <span class="label">YEAR CREATED</span>
+                            <span class="answer" id="workyear"></span>
+                        </div>
+                        <div>
+                            <span class="label">LINK</span>
+                            <span class="answer" id="worklink"></span>
+                        </div>
+                    </div>
+                    <br><br>
+                    <div class="workarrows">
+                        <button id="workprev">PREV</button>
+                        <button id="remWorkButton">Remove Work</button>
+                        <button id="addWorkButton" onclick="showAddWork();">Add Work</button>
+                        <button id="worknext">NEXT</button>
                     </div>
                 </div>
             </div>

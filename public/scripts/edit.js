@@ -32,7 +32,7 @@ function login() {
 }
 function hideAll() {
     let buttons = ['intro', 'education', 'works', 'orgs'];
-    for (let x=1; x<=2; x++) {
+    for (let x=1; x<=3; x++) {
         document.getElementsByClassName(`right-col${x}`)[0].style.display ='none';
         document.getElementById(buttons[x-1]).style.borderBottom='3px solid #444444';
         document.getElementById(buttons[x-1]).style.color='white';
@@ -43,6 +43,8 @@ function hideAll() {
     document.getElementById('editContactLinks').style.display='none';
     document.getElementById('removeEducPrompt').style.display='none';
     document.getElementById('addEducForm').style.display='none';
+    document.getElementById('removeWorkPrompt').style.display='none';
+    document.getElementById('addWorkForm').style.display='none';
 }
 function showContent(x) {
     hideAll();
@@ -79,6 +81,78 @@ function getIndex() {
             document.getElementById('links').innerHTML+=`<img src="public/images/editButton.png" height="30" width="30" style="cursor: pointer; float: right;" onclick='showContactForm("${doc.id}");'>`;
         });
     });
+}
+function showHobbyForm() {
+    document.getElementById('addHobbyForm').style.display='block';
+    document.getElementsByClassName('container')[0].style.opacity='0.3';
+}
+function hideHobbyForm() {
+    document.getElementById('addHobbyForm').style.display='none';
+    document.getElementsByClassName('container')[0].style.opacity='1';
+}
+function editDescription(x) {
+    db.collection("others").doc(x).update({
+        description: document.getElementById('descriptionBox').value
+    }).then(function(docRef) {
+        getIndex();
+        getEducation();
+        getWorks();
+        console.log("Description updated!");
+    }).catch(error => {
+        console.error("Error adding document: ", error);
+    });
+}
+function addHobby() {
+    db.collection("hobbies").add({
+        name: document.getElementById('hobbybox').value
+    }).then(function(docRef) {
+        getIndex();
+        document.getElementById('hobbybox').value='';
+        console.log("Document written with ID: ", docRef.id);
+    }).catch(function(error) {
+        console.error("Error adding document: ", error);
+    });
+}
+function removeHobby(x) {
+    db.collection("hobbies").doc(x).delete().then(function() {
+        console.log("Document successfully deleted!");
+        getIndex();
+    }).catch(function(error) {
+        console.error("Error removing document: ", error);
+    });
+}
+function showDescForm() {
+    document.getElementById('editDescriptionForm').style.display='block';
+    document.getElementsByClassName('container')[0].style.opacity='0.3';
+}
+function hideDescForm() {
+    document.getElementById('editDescriptionForm').style.display='none';
+    document.getElementsByClassName('container')[0].style.opacity='1';
+}
+function editContact() {
+    console.log(document.getElementById('contactidbox').value);
+    db.collection("links").doc(document.getElementById('contactidbox').value).update({
+        link: document.getElementById('contactbox').value
+    }).then(function(docRef) {
+        hideContactForm();
+        getIndex();
+        console.log("Description updated!");
+    }).catch(error => {
+        console.error("Error adding document: ", error);
+    });
+}
+function showContactForm(x) {
+    db.collection("links").doc(x).get().then((doc) => {
+        document.getElementById('contacticon').innerHTML = `<img src="${doc.data().imglink}" style="width: 50; height: 30; display: inline-block;">`
+        document.getElementById('contactbox').value=doc.data().link;
+        document.getElementById('contactidbox').value=doc.id;
+    });
+    document.getElementById('editContactLinks').style.display='block';
+    document.getElementsByClassName('container')[0].style.opacity='0.3';
+}
+function hideContactForm() {
+    document.getElementById('editContactLinks').style.display='none';
+    document.getElementsByClassName('container')[0].style.opacity='1';
 }
 function getEducation() {
     document.getElementById('educdescription').innerHTML='';
@@ -132,76 +206,6 @@ document.getElementById('educprev').onclick = () => {
     document.getElementById('number').value=parseInt(document.getElementById('number').value, 10)-1;
     getEducation();
 }
-function showHobbyForm() {
-    document.getElementById('addHobbyForm').style.display='block';
-    document.getElementsByClassName('container')[0].style.opacity='0.3';
-}
-function hideHobbyForm() {
-    document.getElementById('addHobbyForm').style.display='none';
-    document.getElementsByClassName('container')[0].style.opacity='1';
-}
-function editDescription(x) {
-    db.collection("others").doc(x).update({
-        description: document.getElementById('descriptionBox').value
-    }).then(function(docRef) {
-        getIndex();
-        getEducation();
-        console.log("Description updated!");
-    }).catch(error => {
-        console.error("Error adding document: ", error);
-    });
-}
-function addHobby() {
-    db.collection("hobbies").add({
-        name: document.getElementById('hobbybox').value
-    }).then(function(docRef) {
-        getIndex();
-        console.log("Document written with ID: ", docRef.id);
-    }).catch(function(error) {
-        console.error("Error adding document: ", error);
-    });
-}
-function removeHobby(x) {
-    db.collection("hobbies").doc(x).delete().then(function() {
-        console.log("Document successfully deleted!");
-        getIndex();
-    }).catch(function(error) {
-        console.error("Error removing document: ", error);
-    });
-}
-function showDescForm() {
-    document.getElementById('editDescriptionForm').style.display='block';
-    document.getElementsByClassName('container')[0].style.opacity='0.3';
-}
-function hideDescForm() {
-    document.getElementById('editDescriptionForm').style.display='none';
-    document.getElementsByClassName('container')[0].style.opacity='1';
-}
-function editContact() {
-    console.log(document.getElementById('contactidbox').value);
-    db.collection("links").doc(document.getElementById('contactidbox').value).update({
-        link: document.getElementById('contactbox').value
-    }).then(function(docRef) {
-        hideContactForm();
-        getIndex();
-        console.log("Description updated!");
-    }).catch(error => {
-        console.error("Error adding document: ", error);
-    });
-}
-function showContactForm(x) {
-    db.collection("links").doc(x).get().then((doc) => {
-        document.getElementById('contacticon').innerHTML = `<img src="${doc.data().imglink}" style="width: 50; height: 30; display: inline-block;">`
-        document.getElementById('contactbox').value=doc.data().link;
-        document.getElementById('contactidbox').value=doc.id;
-    });
-    document.getElementById('editContactLinks').style.display='block';
-    document.getElementsByClassName('container')[0].style.opacity='0.3';
-}
-function hideContactForm() {
-    document.getElementById('editContactLinks').style.display='none';
-    document.getElementsByClassName('container')[0].style.opacity='1';
-}
 function showWarning() {
     document.getElementById('removeEducPrompt').style.display = 'block';
     document.getElementsByClassName('container')[0].style.opacity='0.3';
@@ -214,6 +218,7 @@ function removeEduc() {
     var x=document.getElementById('educdocid').value;
     db.collection("educations").doc(`${x}`).delete().then(function() {
         console.log("Document successfully deleted!");
+        document.getElementById('number').value=1;
         getEducation();
     }).catch(function(error) {
         console.error("Error removing document: ", error);
@@ -232,10 +237,104 @@ function addEduc() {
         school: document.getElementById('educschoolbox').value,
         level: document.getElementById('educlevelbox').value,
         imglink: document.getElementById('educschoollogo').value,
+        degree: document.getElementById('educdegreebox').value,
         year_start: parseInt(document.getElementById('educyearstartbox').value,10),
         year_end: parseInt(document.getElementById('educyearendbox').value,10)
     }).then(function(docRef) {
-        getEducation    ();
+        getEducation();
+        document.getElementById('educschoolbox').value='';
+        document.getElementById('educlevelbox').value='';
+        document.getElementById('educschoollogo').value='';
+        document.getElementById('educdegreebox').value='';
+        document.getElementById('educyearstartbox').value='';
+        document.getElementById('educyearendbox').value='';
+        document.getElementById('number').value=1;
+        console.log("Document written with ID: ", docRef.id);
+    }).catch(function(error) {
+        console.error("Error adding document: ", error);
+    });
+}
+function getWorks() {
+    db.collection("others").get().then((snapshot) => {
+        snapshot.forEach((doc) => {
+            document.getElementById('workdescription').innerHTML=`${doc.data().description}`;
+            document.getElementById('workdescription').innerHTML+=`<img src="public/images/editButton.png" height="30" width="30" style="cursor: pointer; float: right; display: inline-block" onclick="showDescForm();"><br><br><br>`
+            document.getElementById('descriptionBox').innerHTML=`${doc.data().description}`;
+        });
+    });
+    db.collection("works").get().then((snapshot) => {
+        size=snapshot.size;
+        counter=1;
+        snapshot.forEach((doc) => {
+            if (counter === parseInt(document.getElementById('number').value, 10)) {
+                document.getElementById('workname').innerHTML = doc.data().name.toUpperCase();
+                document.getElementById('workdescription2').innerHTML = `${doc.data().description}`;
+                document.getElementById('workyear').innerHTML = `${doc.data().year_created}`;
+                document.getElementById('worklink').innerHTML = `${doc.data().link}`;
+                link=doc.data().link;
+            }
+            counter++;
+            document.getElementById('remWorkButton').setAttribute("onclick", `showWarning2(); document.getElementById('workdocid').value='${doc.id}'`);
+        });
+        if (parseInt(document.getElementById('number').value,10)==1)
+            document.getElementById('workprev').style.display='none';
+        else document.getElementById('workprev').style.display='block';    
+        ;
+        if (parseInt(document.getElementById('number').value,10)==size)
+            document.getElementById('worknext').style.display='none';
+        else document.getElementById('worknext').style.display='block';    
+    });
+}
+document.getElementById('worknext').onclick = () => {
+    document.getElementById('number').value=parseInt(document.getElementById('number').value, 10)+1;
+    getWorks();
+}
+document.getElementById('workprev').onclick = () => {
+    document.getElementById('number').value=parseInt(document.getElementById('number').value, 10)-1;
+    getWorks();
+}
+document.getElementById('worklink').onclick = () => {
+    window.location=link;
+}
+function showWarning2() {
+    document.getElementById('removeWorkPrompt').style.display = 'block';
+    document.getElementsByClassName('container')[0].style.opacity='0.3';
+}
+function hideWarning2() {
+    document.getElementById('removeWorkPrompt').style.display = 'none';
+    document.getElementsByClassName('container')[0].style.opacity='1';
+}
+function removeWork() {
+    var x=document.getElementById('workdocid').value;
+    db.collection("works").doc(`${x}`).delete().then(function() {
+        console.log("Document successfully deleted!");
+        document.getElementById('number').value=1;
+        getWorks();
+    }).catch(function(error) {
+        console.error("Error removing document: ", error);
+    });
+}
+function showAddWork() {
+    document.getElementById('addWorkForm').style.display='block';
+    document.getElementsByClassName('container')[0].style.opacity='0.3';
+}
+function hideAddWork() {
+    document.getElementById('addWorkForm').style.display='none';
+    document.getElementsByClassName('container')[0].style.opacity='1';
+}
+function addWork() {
+    db.collection("works").add({
+        description: document.getElementById('workdescbox').value,
+        link: document.getElementById('worklinkbox').value,
+        name: document.getElementById('worknamebox').value,
+        year_created: parseInt(document.getElementById('workyearcreatedbox').value,10)
+    }).then(function(docRef) {
+        getWorks();
+        document.getElementById('workdescbox').value='';
+        document.getElementById('worklinkbox').value='';
+        document.getElementById('worknamebox').value='';
+        document.getElementById('workyearcreatedbox').value='';
+        document.getElementById('number').value=1;
         console.log("Document written with ID: ", docRef.id);
     }).catch(function(error) {
         console.error("Error adding document: ", error);

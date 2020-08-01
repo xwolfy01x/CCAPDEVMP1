@@ -135,10 +135,10 @@ button {
 button:hover {
     background-color: #555555;
 }
-#remEducButton {
+#remEducButton, #remWorkButton {
     background-color: red;
 }
-#addEducButton {
+#addEducButton, #addWorkButton {
     background-color: #06C258;
 }
 @media(max-width: 1300px) { 

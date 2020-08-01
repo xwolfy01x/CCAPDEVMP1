@@ -8,20 +8,20 @@ form {
 .logbutton {
     margin-left: 8%;
 }
-.form, #addHobbyForm, #editDescriptionForm, #editContactLinks, #removeEducPrompt, #addEducForm {
+.form, #addHobbyForm, #editDescriptionForm, #editContactLinks, #removeEducPrompt, #addEducForm, #addWorkForm, #removeWorkPrompt {
     height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
 }
-#addHobbyForm, #editContactLinks, #removeEducPrompt {
+#addHobbyForm, #editContactLinks, #removeEducPrompt, #removeWorkPrompt {
     position: fixed;
     width: 30%;
     z-index: 2;
-    top: 50%;
+    top: 40%;
     left: 35%;
 }
-#removeEducPrompt {
+#removeEducPrompt, #removeWorkPrompt {
     width: 35%;
 }
 #editDescriptionForm {
@@ -29,12 +29,14 @@ form {
     width: 50%;
     z-index: 2;
     left: 25%;
+    top: 20%;
 }
-#addEducForm {
+#addEducForm, #addWorkForm {
     position: fixed;
     width: 40%;
     z-index: 2;
     left: 30%;
+    top: 5%;
 }
 label {
     color: #06c258;
@@ -42,13 +44,13 @@ label {
     font-size: 120%;
     padding-left: 5%;
 }
-#email, #password, #hobbybox, #descriptionBox {
+#email, #password, #hobbybox, #descriptionBox, #workdescbox {
     margin-bottom: 10%;
     font-family: verdana;
     font-size: 1.1rem;
     text-align: justify;
 }
-#educschoolbox, #educschoollogo, #educlevelbox, #educyearstartbox, #educyearendbox {
+#educschoolbox, #educschoollogo, #educlevelbox, #educdegreebox, #educyearstartbox, #educyearendbox, #worknamebox, #workyearcreatedbox, #worklinkbox, #workdescbox {
     margin-bottom: 5%;
     font-family: verdana;
     font-size: 1.1rem;
