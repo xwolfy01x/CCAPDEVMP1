@@ -24,7 +24,7 @@ function orgData() {
         snapshot.forEach(doc => {
             if (counter === parseInt(document.getElementById('number').value, 10)) {
                 document.getElementById('orgname').innerHTML = doc.data().name.toUpperCase();
-                document.getElementById('orgimglink').innerHTML = `<img src=${doc.data().imglink} style="border-radius: 50%;">`;
+                document.getElementById('orgimglink').innerHTML = `<img src=${doc.data().imglink} height="200" width="200" style="border-radius: 50%;">`;
                 document.getElementById('orgyear').innerHTML = `${doc.data().year_start}`;
                 document.getElementById('orgposition').innerHTML = `${doc.data().position}`;
                 link=doc.data().link;

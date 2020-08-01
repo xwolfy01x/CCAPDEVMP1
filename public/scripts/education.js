@@ -23,7 +23,7 @@ function educData() {
             if (counter === parseInt(document.getElementById('number').value, 10)) {
                 document.getElementById('educschool').innerHTML = `${doc.data().school}`;
                 document.getElementById('educlevel').innerHTML = `${doc.data().level.toUpperCase()}`;
-                document.getElementById('educimglink').innerHTML = `<img src=${doc.data().imglink} style="border-radius: 50%;">`;
+                document.getElementById('educimglink').innerHTML = `<img src=${doc.data().imglink} height="200" width="200" style="border-radius: 50%;">`;
                 document.getElementById('educyear').innerHTML = `${doc.data().year_start}-`;
                 if (doc.data().year_end != null)
                     document.getElementById('educyear').innerHTML += `${doc.data().year_end}`;
