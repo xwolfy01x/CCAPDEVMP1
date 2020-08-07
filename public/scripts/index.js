@@ -43,7 +43,6 @@ db.collection("links").orderBy('order', 'asc').get().then((snapshot) => {
         var contact = new Contacts(doc.data().imglink, doc.data().link, doc.data().name);
         contactList.push(contact);
     });
-    console.log(contactList);
     showContactList();
 });
 function showContactList() {

@@ -17,7 +17,6 @@ db.collection("others").get().then((snapshot) => {
         document.getElementById('description').innerHTML+=`${desc.description}<br><br><br>`;
     });
 });
-var educationHistory = [];
 var Education = function(school, level, imglink, year_start, year_end, degree) {
     this.school = school;
     this.level = level;
@@ -26,6 +25,7 @@ var Education = function(school, level, imglink, year_start, year_end, degree) {
     this.year_end = year_end;
     this.degree = degree;
 }
+var educationHistory = [];
 counter=0;
 function educData() {
     db.collection("educations").orderBy("year_start","asc").get().then((snapshot) => {
@@ -36,7 +36,6 @@ function educData() {
         showEducData(0);
     }); 
 }
-
 function showEducData(x) {
     document.getElementById('educschool').innerHTML = educationHistory[x].school;
     document.getElementById('educlevel').innerHTML = educationHistory[x].level.toUpperCase();

@@ -1,3 +1,43 @@
+var Description = function(description) {this.description = description};
+var Hobby = function(name, id) {
+    this.name = name;
+    this.id = id;
+}
+var Contacts = function(imglink, link, name, id) {
+    this.imglink = imglink;
+    this.link = link;
+    this.name = name;
+    this.id = id;
+}
+var Education = function(school, level, imglink, year_start, year_end, degree, id) {
+    this.school = school;
+    this.level = level;
+    this.imglink = imglink;
+    this.year_start = year_start;
+    this.year_end = year_end;
+    this.degree = degree;
+    this.id = id;
+}
+var Work = function(name, description, year_created, link, id) {
+    this.workname = name;
+    this.workdescription = description;
+    this.workyearcreated = year_created;
+    this.worklink = link;
+    this.id = id;
+}
+var Organization = function(orgname, orgimglink, orgyearstart, orgposition, id) {
+    this.orgname = orgname;
+    this.orgimglink = orgimglink;
+    this.orgyear = orgyearstart;
+    this.orgposition = orgposition;
+    this.id = id;
+}
+var counter = 0;
+var hobbyList = [];
+var contactList = [];
+var educationHistory = [];
+var workList = [];
+var orgList = [];
 function removeBg() {
     document.getElementsByTagName('body')[0].style.backgroundImage = 'none';
     document.getElementsByTagName('body')[0].style.backgroundColor = '#444444';
@@ -57,40 +97,66 @@ function showContent(x) {
     document.getElementById(buttons[x-1]).style.borderBottom = '3px solid green';
     document.getElementsByClassName(`right-col${x}`)[0].style.display ='block';
 }
+//All the things in index tab
 function getIndex() {
+    //Clearing all values
+    hobbyList = [];
+    contactList = [];
     document.getElementById('description').innerHTML='';
     document.getElementById('hobbies').innerHTML='';
     document.getElementById('links').innerHTML='';
+    //getting Index Description
     db.collection("others").get().then((snapshot) => {
         snapshot.forEach((doc) => {
-            document.getElementById('description').innerHTML+=`${doc.data().description}`;
+            var desc = new Description(doc.data().description);
+            document.getElementById('description').innerHTML+=desc.description;
             document.getElementById('description').innerHTML+=`<img src="public/images/editButton.png" height="30" width="30" style="cursor: pointer; float: right;" onclick="showDescForm();"><br><br><br>`
             document.getElementById('descriptionBox').innerHTML=`${doc.data().description}`;
         });
     });
+    //Getting Hobbies list
     db.collection("hobbies").orderBy('name','asc').get().then((snapshot) => {
         snapshot.forEach((doc) => {
-            document.getElementById('hobbies').innerHTML+=`<img src="public/images/removehobby.png" height="15" width="15" style="cursor: pointer" onclick="removeHobby('${doc.id}');"> ${doc.data().name}<br><br>`;
+            var hobby = new Hobby(doc.data().name, doc.id);
+            hobbyList.push(hobby);
         });
+        showHobbies();
     });
+    //Getting Contact List
     db.collection("links").orderBy('order', 'asc').get().then((snapshot) => {
         snapshot.forEach((doc) => {
-            document.getElementById('links').innerHTML+=`<img src="${doc.data().imglink}" id="contactimg"></div>`;
-            if (doc.data().name==='call' || doc.data().name==='email')
-                document.getElementById('links').innerHTML+=`<span id="contactlink">${doc.data().link}</span>`;
-            else document.getElementById('links').innerHTML+=`<a id="contactlink" href=${doc.data().link}>${doc.data().link}</a>`;
-            document.getElementById('links').innerHTML+=`<img src="public/images/editButton.png" height="30" width="30" style="cursor: pointer; float: right;" onclick='showContactForm("${doc.id}");'>`;
+            var contact = new Contacts(doc.data().imglink, doc.data().link, doc.data().name, doc.id);
+            contactList.push(contact);
         });
+        showContactList();
     });
 }
+//Displaying of Hobbies
+function showHobbies() {
+    for (let x = 0; x < hobbyList.length; x++)
+        document.getElementById('hobbies').innerHTML+=`<img src="public/images/removehobby.png" height="15" width="15" style="cursor: pointer" onclick="removeHobby('${hobbyList[x].id}');"> ${hobbyList[x].name}<br><br>`;;
+}
+//Displaying of Contact List
+function showContactList() {
+    for (let x = 0; x < contactList.length; x++) {
+        document.getElementById('links').innerHTML+=`<img src="${contactList[x].imglink}" id="contactimg"></div>`;
+        if (contactList[x].name==='call' || contactList[x].name==='email')
+            document.getElementById('links').innerHTML+=`<span id="contactlink">${contactList[x].link}</span>`;
+        else document.getElementById('links').innerHTML+=`<a id="contactlink" href=${contactList[x].link}>${contactList[x].link}</a>`;
+        document.getElementById('links').innerHTML+=`<img src="public/images/editButton.png" height="30" width="30" style="cursor: pointer; float: right;" onclick='showContactForm("${contactList[x].id}");'>`;
+    }
+}
+//Showing the form when adding
 function showHobbyForm() {
     document.getElementById('addHobbyForm').style.display='block';
     document.getElementsByClassName('container')[0].style.opacity='0.3';
 }
+//Hiding the hobby form after clicking buttons
 function hideHobbyForm() {
     document.getElementById('addHobbyForm').style.display='none';
     document.getElementsByClassName('container')[0].style.opacity='1';
 }
+//Editing description of everything
 function editDescription(x) {
     db.collection("others").doc(x).update({
         description: document.getElementById('descriptionBox').value
@@ -104,6 +170,7 @@ function editDescription(x) {
         console.error("Error adding document: ", error);
     });
 }
+//Adding a hobby to the firebase
 function addHobby() {
     db.collection("hobbies").add({
         name: document.getElementById('hobbybox').value
@@ -115,6 +182,7 @@ function addHobby() {
         console.error("Error adding document: ", error);
     });
 }
+//Removing a hobby from the firebase
 function removeHobby(x) {
     db.collection("hobbies").doc(x).delete().then(function() {
         console.log("Document successfully deleted!");
@@ -123,14 +191,17 @@ function removeHobby(x) {
         console.error("Error removing document: ", error);
     });
 }
+//Showing the description form of everything
 function showDescForm() {
     document.getElementById('editDescriptionForm').style.display='block';
     document.getElementsByClassName('container')[0].style.opacity='0.3';
 }
+//Hiding the description form when button is clicked
 function hideDescForm() {
     document.getElementById('editDescriptionForm').style.display='none';
     document.getElementsByClassName('container')[0].style.opacity='1';
 }
+//Updating the content of the contacts
 function editContact() {
     console.log(document.getElementById('contactidbox').value);
     db.collection("links").doc(document.getElementById('contactidbox').value).update({
@@ -143,6 +214,7 @@ function editContact() {
         console.error("Error adding document: ", error);
     });
 }
+//Showing of contact Form when editing
 function showContactForm(x) {
     db.collection("links").doc(x).get().then((doc) => {
         document.getElementById('contacticon').innerHTML = `<img src="${doc.data().imglink}" style="width: 50; height: 30; display: inline-block;">`
@@ -152,70 +224,82 @@ function showContactForm(x) {
     document.getElementById('editContactLinks').style.display='block';
     document.getElementsByClassName('container')[0].style.opacity='0.3';
 }
+//Hiding contact form after editing is done
 function hideContactForm() {
     document.getElementById('editContactLinks').style.display='none';
     document.getElementsByClassName('container')[0].style.opacity='1';
 }
+//All the things in education tab
 function getEducation() {
+    educationHistory = [];
+    counter = 0;
     document.getElementById('educdescription').innerHTML='';
+    //Getting description for education page
     db.collection("others").get().then((snapshot) => {
         snapshot.forEach((doc) => {
-            document.getElementById('educdescription').innerHTML=`${doc.data().description}`;
-            document.getElementById('educdescription').innerHTML+=`<img src="public/images/editButton.png" height="30" width="30" style="cursor: pointer; float: right; display: inline-block" onclick="showDescForm();"><br><br><br>`
+            var desc = new Description(doc.data().description);
+            document.getElementById('educdescription').innerHTML+=desc.description;
+            document.getElementById('educdescription').innerHTML+=`<img src="public/images/editButton.png" height="30" width="30" style="cursor: pointer; float: right;" onclick="showDescForm();"><br><br><br>`
             document.getElementById('descriptionBox').innerHTML=`${doc.data().description}`;
         });
     });
+    //Getting Education Data
     db.collection("educations").orderBy("year_start","asc").get().then((snapshot) => {
-        size=snapshot.size;
-        counter=1;
         snapshot.forEach((doc) => {
-            if (counter === parseInt(document.getElementById('number').value, 10)) {
-                document.getElementById('educschool').innerHTML = `${doc.data().school}`;
-                document.getElementById('educlevel').innerHTML = `${doc.data().level.toUpperCase()}`;
-                document.getElementById('educimglink').innerHTML = `<img src=${doc.data().imglink} height="200" width="200" style="border-radius: 50%;">`;
-                document.getElementById('educyear').innerHTML = `${doc.data().year_start}-`;
-                if (doc.data().year_end != null)
-                    document.getElementById('educyear').innerHTML += `${doc.data().year_end}`;
-                else document.getElementById('educyear').innerHTML += `present`;
-                if(doc.data().degree!=null) {
-                    document.getElementById('educdegree').innerHTML = `${doc.data().degree}`;
-                    document.getElementById('deg').innerHTML = 'Degree';
-                    document.getElementById('deg').style.borderBottom = '3px solid gray';
-                }  
-                else {
-                    document.getElementById('deg').innerHTML = '';
-                    document.getElementById('deg').style.borderBottom = 'none';
-                    document.getElementById('educdegree').innerHTML = ``;  
-                }
-                document.getElementById('remEducButton').setAttribute("onclick", `showWarning(); document.getElementById('educdocid').value='${doc.id}'`);
-            }
-            counter++;
+            var educdata = new Education(doc.data().school, doc.data().level.toUpperCase(), doc.data().imglink, doc.data().year_start, doc.data().year_end, doc.data().degree, doc.id);
+            educationHistory.push(educdata);
         });
-        if (parseInt(document.getElementById('number').value,10)==1)
-            document.getElementById('educprev').style.display='none';
-        else document.getElementById('educprev').style.display='block';    
-        ;
-        if (parseInt(document.getElementById('number').value,10)==size)
-            document.getElementById('educnext').style.display='none';
-        else document.getElementById('educnext').style.display='block';    
-    });
+        showEducData(0);
+    }); 
 }
+//Showing of Education Data
+function showEducData(x) {
+    document.getElementById('educschool').innerHTML = educationHistory[x].school;
+    document.getElementById('educlevel').innerHTML = educationHistory[x].level.toUpperCase();
+    document.getElementById('educimglink').innerHTML = `<img src=${educationHistory[x].imglink} height="200" width="200" style="border-radius: 50%;">`;
+    document.getElementById('educyear').innerHTML = `${educationHistory[x].year_start}-`;
+    if (educationHistory[x].year_end != null)
+        document.getElementById('educyear').innerHTML += educationHistory[x].year_end;
+    else document.getElementById('educyear').innerHTML += `present`;
+    if(educationHistory[x].degree!=null) {
+        document.getElementById('educdegree').innerHTML = educationHistory[x].degree;
+        document.getElementById('deg').innerHTML = 'Degree';
+        document.getElementById('deg').style.borderBottom = '3px solid gray';
+    }  
+    else {
+        document.getElementById('deg').innerHTML = '';
+        document.getElementById('deg').style.borderBottom = 'none';
+        document.getElementById('educdegree').innerHTML = ``;  
+    }
+    if (counter==0)
+        document.getElementById('educprev').style.display='none';
+    else document.getElementById('educprev').style.display='block';    
+    if (counter==educationHistory.length-1)
+    document.getElementById('educnext').style.display='none';
+    else document.getElementById('educnext').style.display='block';
+    document.getElementById('remEducButton').setAttribute("onclick", `showWarning(); document.getElementById('educdocid').value='${educationHistory[x].id}'`);    
+};
+//When user clicks next button on education page
 document.getElementById('educnext').onclick = () => {
-    document.getElementById('number').value=parseInt(document.getElementById('number').value, 10)+1;
-    getEducation();
+    counter++;
+    showEducData(counter);
 }
+//When user clicks previous button on education page
 document.getElementById('educprev').onclick = () => {
-    document.getElementById('number').value=parseInt(document.getElementById('number').value, 10)-1;
-    getEducation();
+    counter--;
+    showEducData(counter);
 }
+//Shows warning if deleting data from education
 function showWarning() {
     document.getElementById('removeEducPrompt').style.display = 'block';
     document.getElementsByClassName('container')[0].style.opacity='0.3';
 }
+//Hides warning when clicked on any button
 function hideWarning() {
     document.getElementById('removeEducPrompt').style.display = 'none';
     document.getElementsByClassName('container')[0].style.opacity='1';
 }
+//Removing education data from firebase
 function removeEduc() {
     var x=document.getElementById('educdocid').value;
     db.collection("educations").doc(`${x}`).delete().then(function() {
@@ -226,14 +310,17 @@ function removeEduc() {
         console.error("Error removing document: ", error);
     });
 }
+//Showing the add education form
 function showAddEduc() {
     document.getElementById('addEducForm').style.display='block';
     document.getElementsByClassName('container')[0].style.opacity='0.3';
 }
+//Hiding the add education form
 function hideAddEduc() {
     document.getElementById('addEducForm').style.display='none';
     document.getElementsByClassName('container')[0].style.opacity='1';
 }
+//Adding the actual education form
 function addEduc() {
     db.collection("educations").add({
         school: document.getElementById('educschoolbox').value,
@@ -256,56 +343,66 @@ function addEduc() {
         console.error("Error adding document: ", error);
     });
 }
+//Works form
 function getWorks() {
+    workList = [];
+    counter = 0;
+    document.getElementById('workdescription').innerHTML='';
     db.collection("others").get().then((snapshot) => {
         snapshot.forEach((doc) => {
-            document.getElementById('workdescription').innerHTML=`${doc.data().description}`;
-            document.getElementById('workdescription').innerHTML+=`<img src="public/images/editButton.png" height="30" width="30" style="cursor: pointer; float: right; display: inline-block" onclick="showDescForm();"><br><br><br>`
+            var desc = new Description(doc.data().description);
+            document.getElementById('workdescription').innerHTML+=desc.description;
+            document.getElementById('workdescription').innerHTML+=`<img src="public/images/editButton.png" height="30" width="30" style="cursor: pointer; float: right;" onclick="showDescForm();"><br><br><br>`
             document.getElementById('descriptionBox').innerHTML=`${doc.data().description}`;
         });
     });
-    db.collection("works").orderBy("year_created", "asc").get().then((snapshot) => {
-        size=snapshot.size;
-        counter=1;
+    db.collection("works").get().then((snapshot) => {
         snapshot.forEach((doc) => {
-            if (counter === parseInt(document.getElementById('number').value, 10)) {
-                document.getElementById('workname').innerHTML = doc.data().name.toUpperCase();
-                document.getElementById('workdescription2').innerHTML = `${doc.data().description}`;
-                document.getElementById('workyear').innerHTML = `${doc.data().year_created}`;
-                document.getElementById('worklink').innerHTML = `${doc.data().link}`;
-                link=doc.data().link;
-                document.getElementById('remWorkButton').setAttribute("onclick", `showWarning2(); document.getElementById('workdocid').value='${doc.id}'`);
-            }
-            counter++;
+            var work = new Work(doc.data().name, doc.data().description, doc.data().year_created, doc.data().link, doc.id);
+            console.log(work);
+            workList.push(work);
         });
-        if (parseInt(document.getElementById('number').value,10)==1)
-            document.getElementById('workprev').style.display='none';
-        else document.getElementById('workprev').style.display='block';    
-        ;
-        if (parseInt(document.getElementById('number').value,10)==size)
-            document.getElementById('worknext').style.display='none';
-        else document.getElementById('worknext').style.display='block';    
+        showWorkData(0);
     });
 }
+function showWorkData(x) {
+    document.getElementById('workname').innerHTML = workList[x].workname.toUpperCase();
+    document.getElementById('workdescription2').innerHTML = workList[x].workdescription;
+    document.getElementById('workyear').innerHTML = workList[x].workyearcreated;
+    document.getElementById('worklink').innerHTML = workList[x].worklink;
+    if (counter==0)
+        document.getElementById('workprev').style.display='none';
+    else document.getElementById('workprev').style.display='block';    
+    if (counter==workList.length-1)
+        document.getElementById('worknext').style.display='none';
+    else document.getElementById('worknext').style.display='block';  
+    document.getElementById('remWorkButton').setAttribute("onclick", `showWarning2(); document.getElementById('workdocid').value='${workList[x].id}'`);
+}  
+//Next button if the user clicks on the works page
 document.getElementById('worknext').onclick = () => {
-    document.getElementById('number').value=parseInt(document.getElementById('number').value, 10)+1;
-    getWorks();
+    counter++;
+    showWorkData(counter);
 }
+//Previous button if the user clicks on the work page
 document.getElementById('workprev').onclick = () => {
-    document.getElementById('number').value=parseInt(document.getElementById('number').value, 10)-1;
-    getWorks();
+    counter--;
+    showWorkData(counter);
 }
+//Redirects the user to the link of the project
 document.getElementById('worklink').onclick = () => {
     window.location=link;
 }
+//Shows warning if u want to delete from the works page
 function showWarning2() {
     document.getElementById('removeWorkPrompt').style.display = 'block';
     document.getElementsByClassName('container')[0].style.opacity='0.3';
 }
+//Hides warning if the user clicks any of the buttons in the show warning2
 function hideWarning2() {
     document.getElementById('removeWorkPrompt').style.display = 'none';
     document.getElementsByClassName('container')[0].style.opacity='1';
 }
+//Removes work data from firebase
 function removeWork() {
     var x=document.getElementById('workdocid').value;
     db.collection("works").doc(`${x}`).delete().then(function() {
@@ -316,14 +413,17 @@ function removeWork() {
         console.error("Error removing document: ", error);
     });
 }
+//Shows the add work data form
 function showAddWork() {
     document.getElementById('addWorkForm').style.display='block';
     document.getElementsByClassName('container')[0].style.opacity='0.3';
 }
+//Hides the add work data form when user clicks on any button
 function hideAddWork() {
     document.getElementById('addWorkForm').style.display='none';
     document.getElementsByClassName('container')[0].style.opacity='1';
 }
+//Adds work data to the form
 function addWork() {
     db.collection("works").add({
         description: document.getElementById('workdescbox').value,
@@ -342,8 +442,11 @@ function addWork() {
         console.error("Error adding document: ", error);
     });
 }
+//Gets Organization data
 function getOrgs() {
+    counter = 0;
     document.getElementById('orgdescription').innerHTML = '';
+    orgList = [];
     db.collection("others").get().then((snapshot) => {
         snapshot.forEach((doc) => {
             document.getElementById('orgdescription').innerHTML+=`${doc.data().description}`;
@@ -351,44 +454,51 @@ function getOrgs() {
             document.getElementById('descriptionBox').innerHTML=`${doc.data().description}`;
         });
     });
+    //Gets the list of org data
     db.collection("organizations").orderBy("year_start", "asc").get().then(snapshot => {
-        counter=1;
-        size=snapshot.size;
         snapshot.forEach(doc => {
-            if (counter === parseInt(document.getElementById('number').value, 10)) {
-                document.getElementById('orgname').innerHTML = doc.data().name.toUpperCase();
-                document.getElementById('orgimglink').innerHTML = `<img src=${doc.data().imglink} height="200" width="200" style="border-radius: 50%;">`;
-                document.getElementById('orgyear').innerHTML = `${doc.data().year_start}`;
-                document.getElementById('orgposition').innerHTML = `${doc.data().position}`;
-                link=doc.data().link;
-                document.getElementById('remOrgButton').setAttribute("onclick", `showWarning3(); document.getElementById('orgdocid').value='${doc.id}'`);
-            }
-            counter++;
+            var org = new Organization(doc.data().name, doc.data().imglink, doc.data().year_start, doc.data().position, doc.id);
+            orgList.push(org);
         });
-        if (parseInt(document.getElementById('number').value,10)==1)
-            document.getElementById('orgprev').style.display='none';
-        else document.getElementById('orgprev').style.display='block';    
-        if (parseInt(document.getElementById('number').value,10)==size)
-            document.getElementById('orgnext').style.display='none';
-        else document.getElementById('orgnext').style.display='block';    
+        showOrgs(0);  
     });
 }
+//Shows the list of organizations 
+function showOrgs(x) {
+    document.getElementById('orgname').innerHTML = orgList[x].orgname.toUpperCase();
+    document.getElementById('orgimglink').innerHTML = `<img src=${orgList[x].orgimglink} height="200" width="200" style="border-radius: 50%;">`;
+    document.getElementById('orgyear').innerHTML = `${orgList[x].orgyear}`;
+    document.getElementById('orgposition').innerHTML = `${orgList[x].orgposition}`;
+    link=orgList[x].link;
+    if (counter==0)
+        document.getElementById('orgprev').style.display='none';
+    else document.getElementById('orgprev').style.display='block';    
+    if (counter==orgList.length-1)
+        document.getElementById('orgnext').style.display='none';
+    else document.getElementById('orgnext').style.display='block';  
+    document.getElementById('remOrgButton').setAttribute("onclick", `showWarning3(); document.getElementById('orgdocid').value='${orgList[x].id}'`);  
+}
+//Shows the next org data
 document.getElementById('orgnext').onclick = () => {
-    document.getElementById('number').value=parseInt(document.getElementById('number').value, 10)+1;
-    getOrgs();
+    counter++;
+    showOrgs(counter);
 }
+//Shows the prev org data
 document.getElementById('orgprev').onclick = () => {
-    document.getElementById('number').value=parseInt(document.getElementById('number').value, 10)-1;
-    getOrgs();
+    counter--;
+    showOrgs(counter);
 }
+//Shows the add organization data form
 function showAddOrg() {
     document.getElementById('addOrgForm').style.display='block';
     document.getElementsByClassName('container')[0].style.opacity='0.3';
 }
+//Hides the add organization form when user clicks on any button
 function hideAddOrg() {
     document.getElementById('addOrgForm').style.display='none';
     document.getElementsByClassName('container')[0].style.opacity='1';
 }
+//Adds Organization to the firebase
 function addOrg() {
     db.collection("organizations").add({
         name: document.getElementById('orgnamebox').value,
@@ -407,14 +517,17 @@ function addOrg() {
         console.error("Error adding document: ", error);
     });
 }
+//Shows organization warning if user wants to delete
 function showWarning3() {
     document.getElementById('removeOrgPrompt').style.display = 'block';
     document.getElementsByClassName('container')[0].style.opacity='0.3';
 }
+//Hides the show organization warning if user clicks on any button
 function hideWarning3() {
     document.getElementById('removeOrgPrompt').style.display = 'none';
     document.getElementsByClassName('container')[0].style.opacity='1';
 }
+//Removes the organization from firebase
 function removeOrg() {
     var x=document.getElementById('orgdocid').value;
     console.log(x);
