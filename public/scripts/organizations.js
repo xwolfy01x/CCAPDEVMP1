@@ -10,40 +10,48 @@ var firebaseConfig = {
 };
 var defaultProject = firebase.initializeApp(firebaseConfig);
 var db = firebase.firestore();
-var counter;
-var size;
+var counter = 0;
+var Description = function(description) {this.description = description};
 db.collection("others").get().then((snapshot) => {
     snapshot.forEach((doc) => {
-        document.getElementById('description').innerHTML+=`${doc.data().description}<br><br><br>`;
+        var desc = new Description(doc.data().description);
+        document.getElementById('description').innerHTML+=`${desc.description}<br><br><br>`;
     });
 });
+var Organization = function(orgname, orgimglink, orgyearstart, orgposition) {
+    this.orgname = orgname;
+    this.orgimglink = orgimglink;
+    this.orgyear = orgyearstart;
+    this.orgposition = orgposition;
+}
+var orgList = [];
 function orgData() {
     db.collection("organizations").orderBy("year_start", "asc").get().then(snapshot => {
-        counter=1;
-        size=snapshot.size;
         snapshot.forEach(doc => {
-            if (counter === parseInt(document.getElementById('number').value, 10)) {
-                document.getElementById('orgname').innerHTML = doc.data().name.toUpperCase();
-                document.getElementById('orgimglink').innerHTML = `<img src=${doc.data().imglink} height="200" width="200" style="border-radius: 50%;">`;
-                document.getElementById('orgyear').innerHTML = `${doc.data().year_start}`;
-                document.getElementById('orgposition').innerHTML = `${doc.data().position}`;
-                link=doc.data().link;
-            }
-            counter++;
+            var org = new Organization(doc.data().name, doc.data().imglink, doc.data().year_start, doc.data().position);
+            orgList.push(org);
         });
-        if (parseInt(document.getElementById('number').value,10)==1)
-            document.getElementById('orgprev').style.display='none';
-        else document.getElementById('orgprev').style.display='block';    
-        if (parseInt(document.getElementById('number').value,10)==size)
-            document.getElementById('orgnext').style.display='none';
-        else document.getElementById('orgnext').style.display='block';    
+        showOrgs(0);  
     });
 }
+function showOrgs(x) {
+    document.getElementById('orgname').innerHTML = orgList[x].orgname.toUpperCase();
+    document.getElementById('orgimglink').innerHTML = `<img src=${orgList[x].orgimglink} height="200" width="200" style="border-radius: 50%;">`;
+    document.getElementById('orgyear').innerHTML = `${orgList[x].orgyear}`;
+    document.getElementById('orgposition').innerHTML = `${orgList[x].orgposition}`;
+    link=orgList[x].link;
+    if (counter==0)
+        document.getElementById('orgprev').style.display='none';
+    else document.getElementById('orgprev').style.display='block';    
+    if (counter==orgList.length-1)
+        document.getElementById('orgnext').style.display='none';
+    else document.getElementById('orgnext').style.display='block';    
+}
 document.getElementById('orgnext').onclick = () => {
-    document.getElementById('number').value=parseInt(document.getElementById('number').value, 10)+1;
-    orgData();
+    counter++;
+    showOrgs(counter);
 }
 document.getElementById('orgprev').onclick = () => {
-    document.getElementById('number').value=parseInt(document.getElementById('number').value, 10)-1;
-    orgData();
+    counter--;
+    showOrgs(counter);
 }

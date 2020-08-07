@@ -11,43 +11,49 @@ var firebaseConfig = {
 var defaultProject = firebase.initializeApp(firebaseConfig);
 var db = firebase.firestore();
 var link;
-var counter;
-var size;
+var counter = 0;
+var Description = function(description) {this.description = description};
 db.collection("others").get().then((snapshot) => {
     snapshot.forEach((doc) => {
-        document.getElementById('description').innerHTML+=`${doc.data().description}<br><br><br>`;
+        var desc = new Description(doc.data().description);
+        document.getElementById('description').innerHTML+=`${desc.description}<br><br><br>`;
     });
 });
+var Work = function(name, description, year_created, link) {
+    this.workname = name;
+    this.workdescription = description;
+    this.workyearcreated = year_created;
+    this.worklink = link;
+}
+var workList = [];
 function workData() {
     db.collection("works").get().then((snapshot) => {
-        size=snapshot.size;
-        counter=1;
         snapshot.forEach((doc) => {
-            if (counter === parseInt(document.getElementById('number').value, 10)) {
-                document.getElementById('workname').innerHTML = doc.data().name.toUpperCase();
-                document.getElementById('workdescription').innerHTML = `${doc.data().description}`;
-                document.getElementById('workyear').innerHTML = `${doc.data().year_created}`;
-                document.getElementById('worklink').innerHTML = `${doc.data().link}`;
-                link=doc.data().link;
-            }
-            counter++;
+            var work = new Work(doc.data().name, doc.data().description, doc.data().year_created, doc.data().link);
+            workList.push(work);
         });
-        if (parseInt(document.getElementById('number').value,10)==1)
-            document.getElementById('workprev').style.display='none';
-        else document.getElementById('workprev').style.display='block';    
-        ;
-        if (parseInt(document.getElementById('number').value,10)==size)
-            document.getElementById('worknext').style.display='none';
-        else document.getElementById('worknext').style.display='block';    
+        showWorkData(0);
     });
 }
+function showWorkData(x) {
+    document.getElementById('workname').innerHTML = workList[x].workname.toUpperCase();
+    document.getElementById('workdescription').innerHTML = workList[x].workdescription;
+    document.getElementById('workyear').innerHTML = workList[x].workyearcreated;
+    document.getElementById('worklink').innerHTML = workList[x].worklink;
+    if (counter==0)
+        document.getElementById('workprev').style.display='none';
+    else document.getElementById('workprev').style.display='block';    
+    if (counter==workList.length-1)
+        document.getElementById('worknext').style.display='none';
+    else document.getElementById('worknext').style.display='block';  
+}  
 document.getElementById('worknext').onclick = () => {
-    document.getElementById('number').value=parseInt(document.getElementById('number').value, 10)+1;
-    workData();
+    counter++;
+    showWorkData(counter);
 }
 document.getElementById('workprev').onclick = () => {
-    document.getElementById('number').value=parseInt(document.getElementById('number').value, 10)-1;
-    workData();
+    counter--;
+    showWorkData(counter);
 }
 document.getElementById('worklink').onclick = () => {
     window.location=link;
