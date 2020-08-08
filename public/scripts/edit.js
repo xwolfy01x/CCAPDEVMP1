@@ -359,7 +359,6 @@ function getWorks() {
     db.collection("works").get().then((snapshot) => {
         snapshot.forEach((doc) => {
             var work = new Work(doc.data().name, doc.data().description, doc.data().year_created, doc.data().link, doc.id);
-            console.log(work);
             workList.push(work);
         });
         showWorkData(0);
